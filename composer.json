@@ -1,0 +1,19 @@
+{
+  "name": "mifiel/api-client",
+  "description": "Mifiel API Client for PHP",
+  "type": "library",
+  "require": {
+    "php": ">=5.3.3",
+    "99designs/http-signatures": "^2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.1"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Genaro Madrid",
+      "email": "genmadrid@gmail.com"
+    }
+  ]
+}
