@@ -5,33 +5,46 @@ class ArgumentError extends \Exception {}
 
 abstract class BaseObject {
 
-  private $values;
+  private $values = array();
 
-  public function __constuct($values) {
+  public function __construct($values) {
     $this->values = $values;
   }
 
   public static function all() {
-    if (static::$resourceName == null){
-      throw new ArgumentError('You must declare resourceName', 1);
-    }
+    self::validateResuorceName();
     $response = ApiClient::get(static::$resourceName);
     $response_body_arr = json_decode($response->getBody());
     $return = array();
-    foreach ($response_body_arr as $document) {
-      $return[] = new Document($document);
+    foreach ($response_body_arr as $object) {
+      $return[] = new static($object);
     }
     return $return;
   }
 
+  private static function validateResuorceName() {
+    if (static::$resourceName == null){
+      throw new ArgumentError('You must declare resourceName', 1);
+    }
+  }
+
+  public function save(){
+    self::validateResuorceName();
+    $response = ApiClient::post(static::$resourceName, $this->values);
+  }
+
+  public function values() {
+    return $this->values;
+  }
+
   public function __get($property) {
-    if ($values[$property]) {
-      return $this->values[$property];
+    if ($this->values->$property) {
+      return $this->values->$property;
     }
   }
 
   public function __set($property, $value) {
-    $this->values[$property] = $value;
+    $this->values->$property = $value;
     return $this;
   }
 }
