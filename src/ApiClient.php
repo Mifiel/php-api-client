@@ -34,7 +34,7 @@ class ApiClient {
     return self::request('DELETE', $path, $params);
   }
 
-  public static function update($path, $params=array()) {
+  public static function put($path, $params=array()) {
     return self::request('PUT', $path, $params);
   }
 
