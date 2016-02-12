@@ -13,6 +13,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     );
     $documents = Document::all();
     $this->assertTrue(is_array($documents));
+    $this->assertTrue(get_class($documents[0]) == 'Mifiel\Document');
   }
 
 }
