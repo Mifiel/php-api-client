@@ -30,7 +30,10 @@ abstract class BaseObject {
 
   public function save(){
     self::validateResuorceName();
-    $response = ApiClient::post(static::$resourceName, $this->values);
+    $response = ApiClient::put(
+      static::$resourceName . '/' . $this->id,
+      (array) $this->values
+    );
   }
 
   public function values() {
