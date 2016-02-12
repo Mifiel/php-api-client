@@ -1,27 +1,6 @@
 <?php
 namespace Mifiel;
 
-class Document {
-
-  private $values;
-
-  public function __constuct($values) {
-    $this->values = $values;
-  }
-
-  public static function all() {
-    $response = ApiClient::get('documents');
-    return $response->getBody();
-  }
-
-  public function __get($property) {
-    if ($values[$property]) {
-      return $this->values[$property];
-    }
-  }
-
-  public function __set($property, $value) {
-    $this->values[$property] = $value;
-    return $this;
-  }
+class Document extends BaseObject {
+  protected static $resourceName = 'documents';
 }
