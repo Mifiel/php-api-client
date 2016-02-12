@@ -39,9 +39,10 @@ class ApiClient {
   }
 
   private static function request($type, $path, $params) {
-    $md5Header = empty($params) ? '' : md5(json_encode($params));
+    $params = json_encode($params);
+    $md5Header = empty($params) ? '' : md5($params, true);
     $headers = array(
-      'content-md5'  => $md5Header,
+      'content-md5'  => base64_encode($md5Header),
       'Date'         => gmdate('D, d M Y H:i:s T')
     );
     $request = new Request(strtoupper($type), $path, $headers, $params);
