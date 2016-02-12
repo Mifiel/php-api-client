@@ -5,10 +5,10 @@ class ArgumentError extends \Exception {}
 
 abstract class BaseObject {
 
-  private $values = array();
+  private $values;
 
   public function __construct($values) {
-    $this->values = $values;
+    $this->values = (object) $values;
   }
 
   public static function all() {
@@ -30,9 +30,18 @@ abstract class BaseObject {
 
   public function save(){
     self::validateResuorceName();
-    $response = ApiClient::put(
-      static::$resourceName . '/' . $this->id,
-      (array) $this->values
+    if ($this->id) {
+      $response = ApiClient::put(
+        static::$resourceName . '/' . $this->id,
+        (array) $this->values
+      );
+    } else {
+      $response = ApiClient::post(
+        static::$resourceName,
+        (array) $this->values
+      );
+    }
+  }
 
   public function delete(){
     self::validateResuorceName();

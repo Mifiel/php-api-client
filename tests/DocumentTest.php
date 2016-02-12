@@ -18,7 +18,18 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
   public function getDocument() {
     $this->setTokens();
     $documents = Document::all();
-    return $documents[0];
+    return $documents[count($documents) - 1];
+  }
+
+  public function testSaveUpdate() {
+    $document = $this->getDocument();
+    $this->assertEquals('', $document->callback_url);
+    $callback_url = 'blah';
+    $document->callback_url = $callback_url;
+    $document->save();
+    // Fetch document again
+    $document = $this->getDocument();
+    $this->assertEquals($callback_url, $document->callback_url);
   }
 
   public function testAll() {
@@ -43,15 +54,11 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($original_hash, $document->original_hash);
   }
 
-  public function testSave() {
+  public function testDelete() {
     $document = $this->getDocument();
-    $this->assertEquals('', $document->callback_url);
-    $callback_url = 'blah';
-    $document->callback_url = $callback_url;
-    $document->save();
-    // Fetch document again
-    $document = $this->getDocument();
-    $this->assertEquals($callback_url, $document->callback_url);
+    $document->delete();
+    $documents = Document::all();
+    $this->assertEmpty($documents);
   }
 
 }
