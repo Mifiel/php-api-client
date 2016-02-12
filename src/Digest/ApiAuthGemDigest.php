@@ -23,7 +23,7 @@ class ApiAuthGemDigest extends Version1 {
     if ($request->hasHeader('content-md5')){
       return $request->getHeader('content-md5');
     }
-    return md5($request->getBody());
+    return base64_encode(md5($request->getBody(), true));
   }
 
   protected function getTimestamp(RequestSignerInterface $requestSigner, RequestInterface $request) {
@@ -33,4 +33,3 @@ class ApiAuthGemDigest extends Version1 {
     return $requestSigner->getTimestamp($request);
   }
 }
-
