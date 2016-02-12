@@ -23,12 +23,28 @@ class ApiClient {
   }
 
   public static function get($path, $params=array()) {
+    return self::request('GET', $path, $params);
+  }
+
+  public static function post($path, $params=array()) {
+    return self::request('POST', $path, $params);
+  }
+
+  public static function delete($path) {
+    return self::request('DELETE', $path, $params);
+  }
+
+  public static function update($path, $params) {
+    return self::request('PUT', $path, $params);
+  }
+
+  private static request($type, $path, $params) {
     $md5Header = empty($params) ? '' : md5(json_encode($params));
     $headers = array(
       'content-md5'  => $md5Header,
       'Date'         => gmdate('D, d M Y H:i:s T')
     );
-    $request = new Request('GET', $path, $headers, $params);
+    $request = new Request(strtoupper($type), $path, $headers, $params);
 
     return self::$client->send($request);
   }
