@@ -17,7 +17,6 @@ class ApiAuthGemDigest extends Version1 {
       $this->getTimestamp($requestSigner, $request)
     );
 
-    echo "\n" . join(',', $parts) . "\n";
     return join(',', $parts);
   }
 

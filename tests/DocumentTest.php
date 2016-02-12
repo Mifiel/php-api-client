@@ -12,7 +12,6 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
       'm7MvN0kvmF4/TbYGb7ImlWtUbfQ2XSj+STzvmLBCzOI2L+Kgr2ajaOkftQevv8/KJILevxlpvFWpVbj7hczQQg=='
     );
     $documents = Document::all();
-    echo "Docs: $documents";
     $this->assertTrue(is_array($documents));
   }
 
