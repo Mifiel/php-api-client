@@ -13,11 +13,4 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(ApiClient::appId(), $appId);
     $this->assertEquals(ApiClient::appSecret(), $appSecret);
   }
-
-  public function testBuildUrl() {
-    $path = '/some-path';
-    $url = ApiClient::buildUrl($path);
-    $this->assertEquals($url, ApiClient::url() + $path);
-  }
-
 }

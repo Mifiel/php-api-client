@@ -10,9 +10,8 @@ class Document {
   }
 
   public static function all() {
-    $request = Client::get('/documents');
-    echo "Content: " . $request->getPathInfo();
-    return array('' => ',' );
+    $response = ApiClient::get('documents');
+    return $response->getBody();
   }
 
   public function __get($property) {

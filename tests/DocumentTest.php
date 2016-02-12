@@ -1,14 +1,18 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\Client;
+use Mifiel\ApiClient;
 use Mifiel\Document;
 
 class DocumentTest extends \PHPUnit_Framework_TestCase {
 
   public function testAll() {
-    Client::setTokens($app_id, $app_secret);
+    ApiClient::setTokens(
+      '44c783d37ef12d3912f911c7b3ac44d657d83b17',
+      'm7MvN0kvmF4/TbYGb7ImlWtUbfQ2XSj+STzvmLBCzOI2L+Kgr2ajaOkftQevv8/KJILevxlpvFWpVbj7hczQQg=='
+    );
     $documents = Document::all();
+    echo "Docs: $documents";
     $this->assertTrue(is_array($documents));
   }
 

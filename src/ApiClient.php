@@ -1,49 +1,48 @@
 <?php
 namespace Mifiel;
 
-use HttpSignatures\Context;
-use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Psr7\Request;
+use Acquia\Hmac\Guzzle\HmacAuthMiddleware;
+use Acquia\Hmac\RequestSigner;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use Mifiel\Digest\ApiAuthGemDigest;
 
 class ApiClient {
 
   private static $appId;
   private static $appSecret;
-  private static $context;
+  private static $client;
   private static $url;
 
   public static function setTokens($appId, $appSecret) {
     self::$appId = $appId;
     self::$appSecret = $appSecret;
-    self::$url = 'http://genaro-book.local';
-    self::setContext();
+    self::$url = 'http://genaro-book.local:3000/api/v1/';
+    self::setClient();
   }
 
   public static function get($path, $params=array()) {
-    $url = self::buildUrl($path);
-    $request = Request::create($url, 'GET', $params);
-    $request->headers->replace(array(
-      'HTTP-METHOD'   => 'GET',
-      'CONTENT-TYPE'  => 'application/json',
-      'CONTENT-MD5'   => md5(json_encode($params)),
-      'REQUEST-URI'   => $path,
-      'TIMESTAMP'     => gmdate('D, d M Y H:i:s T')
-    ));
-    self::$context->signer()->sign($request);
-    return $request;
+    $headers = array(
+      'http-method'  => 'GET',
+      'content-type' => 'application/json',
+      'content-md5'  => md5(json_encode($params)),
+      'request-uri'  => $path,
+      'timestamp'    => gmdate('D, d M Y H:i:s T')
+    );
+    $request = new Request('GET', $path, $headers, $params);
+
+    return self::$client->send($request);
   }
 
   public static function url(){
     return self::$url;
   }
 
-  public static function buildUrl($path) {
-    return self::$url + $path;
-  }
-
   public static function appId($appId=null) {
     if ($appId) {
       self::$appId = $appId;
-      setContext();
+      setClient();
       return;
     }
     return self::$appId;
@@ -52,27 +51,31 @@ class ApiClient {
   public static function appSecret($appSecret=null) {
     if ($appSecret) {
       self::$appSecret = $appSecret;
-      setContext();
+      setClient();
       return;
     }
     return self::$appSecret;
   }
 
   public static function context(){
-    return self::$context;
+    return self::$client;
   }
 
-  private static function setContext() {
-    self::$context = new Context(array(
-      'keys'      => array(self::$appId => self::$appSecret),
-      'algorithm' => 'hmac-sha1',
-      'headers'   => array(
-        'HTTP-METHOD',
-        'CONTENT-TYPE',
-        'CONTENT-MD5',
-        'REQUEST-URI',
-        'TIMESTAMP'
-      ),
-    ));
+  private static function setClient() {
+    $signer = new RequestSigner(new ApiAuthGemDigest());
+
+    $middleware = new HmacAuthMiddleware(
+      $signer,
+      self::$appId,
+      self::$appSecret
+    );
+
+    $stack = HandlerStack::create();
+    $stack->push($middleware);
+
+    self::$client = new Client([
+      'base_uri' => self::$url,
+      'handler' => $stack,
+    ]);
   }
 }
