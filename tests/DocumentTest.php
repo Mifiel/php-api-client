@@ -42,6 +42,16 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     $document->original_hash = $original_hash;
     $this->assertEquals($original_hash, $document->original_hash);
   }
+
+  public function testSave() {
+    $document = $this->getDocument();
+    $this->assertEquals('', $document->callback_url);
+    $callback_url = 'blah';
+    $document->callback_url = $callback_url;
+    $document->save();
+    // Fetch document again
+    $document = $this->getDocument();
+    $this->assertEquals($callback_url, $document->callback_url);
   }
 
 }
