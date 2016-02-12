@@ -41,6 +41,7 @@ abstract class BaseObject {
         (array) $this->values
       );
     }
+    $this->values = (object) json_decode($response->getBody());
   }
 
   public function delete(){
