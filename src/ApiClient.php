@@ -23,12 +23,10 @@ class ApiClient {
   }
 
   public static function get($path, $params=array()) {
+    $md5Header = empty($params) ? '' : md5(json_encode($params));
     $headers = array(
-      'http-method'  => 'GET',
-      'content-type' => 'application/json',
-      'content-md5'  => md5(json_encode($params)),
-      'request-uri'  => $path,
-      'timestamp'    => gmdate('D, d M Y H:i:s T')
+      'content-md5'  => $md5Header,
+      'Date'         => gmdate('D, d M Y H:i:s T')
     );
     $request = new Request('GET', $path, $headers, $params);
 
@@ -63,6 +61,7 @@ class ApiClient {
 
   private static function setClient() {
     $signer = new RequestSigner(new ApiAuthGemDigest());
+    $signer->setProvider('APIAuth');
 
     $middleware = new HmacAuthMiddleware(
       $signer,
