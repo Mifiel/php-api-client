@@ -1,9 +1,10 @@
 <?php
 namespace Mifiel;
+
 use HttpSignatures\Context;
 use Symfony\Component\HttpFoundation\Request;
 
-class Client {
+class ApiClient {
 
   private static $appId;
   private static $appSecret;
