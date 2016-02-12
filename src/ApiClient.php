@@ -34,11 +34,11 @@ class ApiClient {
     return self::request('DELETE', $path, $params);
   }
 
-  public static function update($path, $params) {
+  public static function update($path, $params=array()) {
     return self::request('PUT', $path, $params);
   }
 
-  private static request($type, $path, $params) {
+  private static function request($type, $path, $params) {
     $md5Header = empty($params) ? '' : md5(json_encode($params));
     $headers = array(
       'content-md5'  => $md5Header,
