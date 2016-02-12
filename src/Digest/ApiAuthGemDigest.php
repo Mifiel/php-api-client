@@ -8,7 +8,6 @@ use Acquia\Hmac\Digest\Version1;
 class ApiAuthGemDigest extends Version1 {
   protected function getMessage(RequestSignerInterface $requestSigner, RequestInterface $request) {
 
-
     $parts = array(
       $this->getMethod($request),
       $this->getContentType($requestSigner, $request),
