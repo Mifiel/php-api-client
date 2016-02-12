@@ -33,6 +33,11 @@ abstract class BaseObject {
     $response = ApiClient::put(
       static::$resourceName . '/' . $this->id,
       (array) $this->values
+
+  public function delete(){
+    self::validateResuorceName();
+    $response = ApiClient::delete(
+      static::$resourceName . '/' . $this->id
     );
   }
 
