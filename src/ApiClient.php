@@ -44,14 +44,9 @@ class ApiClient {
       $md5Header = $multipart_arr['content-md5'];
       $options = ['multipart' => $multipart_arr['contents']];
     } else {
-      $md5Header = empty($params) ? '' : md5(json_encode($params), true);
       $options = ['json' => $params];
     }
 
-    $options['headers'] = [
-      'content-md5' => base64_encode($md5Header),
-      'Date' => gmdate('D, d M Y H:i:s T'),
-    ];
     return self::$client->request(strtoupper($type), $path, $options);
   }
 

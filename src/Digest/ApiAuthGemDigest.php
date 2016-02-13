@@ -23,13 +23,15 @@ class ApiAuthGemDigest extends Version1 {
     if ($request->hasHeader('content-md5')){
       return $request->getHeader('content-md5');
     }
-    return base64_encode(md5($request->getBody(), true));
+
+    // TODO: test if json first
+    $contents = json_encode($request->getBody());
+    // for some reason this works
+    $response = $contents == "{}" ? '' : md5($contents, true);
+    return base64_encode($response);
   }
 
   protected function getTimestamp(RequestSignerInterface $requestSigner, RequestInterface $request) {
-    if ($request->hasHeader('Date')){
-      return $request->getHeader('Date');
-    }
     return $requestSigner->getTimestamp($request);
   }
 }
