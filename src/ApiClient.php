@@ -26,28 +26,54 @@ class ApiClient {
     return self::request('GET', $path, $params);
   }
 
-  public static function post($path, $params=array()) {
-    return self::request('POST', $path, $params);
+  public static function post($path, $params=array(), $multipart=false) {
+    return self::request('POST', $path, $params, $multipart);
   }
 
   public static function delete($path) {
     return self::request('DELETE', $path, $params);
   }
 
-  public static function put($path, $params=array()) {
-    return self::request('PUT', $path, $params);
+  public static function put($path, $params=array(), $multipart=false) {
+    return self::request('PUT', $path, $params, $multipart);
   }
 
-  private static function request($type, $path, $params) {
-    $params = json_encode($params);
-    $md5Header = empty($params) ? '' : md5($params, true);
-    $headers = array(
-      'content-md5'  => base64_encode($md5Header),
-      'Date'         => gmdate('D, d M Y H:i:s T')
-    );
-    $request = new Request(strtoupper($type), $path, $headers, $params);
+  private static function request($type, $path, $params, $multipart=false) {
+    if ($multipart) {
+      $multipart_arr = self::build_multipart($params);
+      $md5Header = $multipart_arr['content-md5'];
+      $options = ['multipart' => $multipart_arr['contents']];
+    } else {
+      $md5Header = empty($params) ? '' : md5(json_encode($params), true);
+      $options = ['json' => $params];
+    }
 
-    return self::$client->send($request);
+    $options['headers'] = [
+      'content-md5' => base64_encode($md5Header),
+      'Date' => gmdate('D, d M Y H:i:s T'),
+    ];
+    return self::$client->request(strtoupper($type), $path, $options);
+  }
+
+  public static function build_multipart($params) {
+    $multipart_arr = array();
+    foreach ($params as $key => $value) {
+      if (is_array($value) && $value['filename']) {
+        $field = [
+          'name'      => $key,
+          'contents'  => $value['contents'],
+          'filename'  => $value['filename']
+        ];
+      } else {
+        $field = [ 'name' => $key, 'contents' => $value ];
+      }
+      array_push($multipart_arr, $field);
+    }
+    $md5Header = empty($multipart_arr) ? '' : md5(json_encode($multipart_arr), true);
+    return [
+      'contents'    => $multipart_arr,
+      'content-md5' => $md5Header
+    ];
   }
 
   public static function url(){
