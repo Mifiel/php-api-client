@@ -18,7 +18,8 @@ module.exports = function(grunt) {
       },
       options: {
         bin: 'vendor/bin/phpunit',
-        colors: true
+        colors: true,
+        coverageHtml: true
       }
     }
   });
