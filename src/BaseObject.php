@@ -5,7 +5,7 @@ class ArgumentError extends \Exception {}
 
 abstract class BaseObject {
 
-  private $values;
+  protected $values;
 
   public function __construct($values) {
     $this->values = (object) $values;
