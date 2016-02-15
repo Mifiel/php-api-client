@@ -63,7 +63,7 @@ class ApiClient {
   }
 
   private static function build_field($name, $value) {
-    if (is_array($value) && $value['filename']) {
+    if (is_array($value) && isset($value['filename'])) {
       return [
         'name'      => $name,
         'contents'  => $value['contents'],
