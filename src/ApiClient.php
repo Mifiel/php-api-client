@@ -39,10 +39,11 @@ class ApiClient {
   }
 
   private static function request($type, $path, $params, $multipart=false) {
+    $options = [];
     if ($multipart) {
-      $options = ['multipart' => self::build_multipart($params)];
-    } else {
-      $options = ['json' => $params];
+      $options['multipart'] = self::build_multipart($params);
+    } elseif(!empty($params)) {
+      $options['json'] = $params;
     }
     // $options['headers'] = [
     //   'content-md5' => base64_encode(md5(json_encode($params), true))
