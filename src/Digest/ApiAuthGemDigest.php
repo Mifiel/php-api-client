@@ -16,7 +16,8 @@ class ApiAuthGemDigest extends Version1 {
       $this->getTimestamp($requestSigner, $request)
     );
 
-    return join(',', $parts);
+    $message = join(',', $parts);
+    return $message;
   }
 
   protected function getHashedBody(RequestInterface $request) {
@@ -24,8 +25,11 @@ class ApiAuthGemDigest extends Version1 {
       return $request->getHeader('content-md5');
     }
 
+    $body = $request->getBody();
+    // return base64_encode(md5($body->__toString()));
+
     // TODO: test if json first
-    $contents = json_encode($request->getBody());
+    $contents = json_encode($body);
     // for some reason this works
     $response = $contents == "{}" ? '' : md5($contents, true);
     return base64_encode($response);
