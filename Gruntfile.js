@@ -19,7 +19,7 @@ module.exports = function(grunt) {
       options: {
         bin: 'vendor/bin/phpunit',
         colors: true,
-        coverageHtml: true
+        coverageHtml: 'coverage/'
       }
     }
   });
