@@ -6,7 +6,7 @@ use Mifiel\Document;
 
 class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
 
-  const ORIGINAL_HASH = '7cf3c80bbe595734a960b49a79d6e87f8932c21fea6665b69cfa1257f85f7dc1';
+  const ORIGINAL_HASH = 'f4dee35b52fc06aa9d47f6297c7cff51e8bcebf90683da234a07ed507dafd57b';
   private static $id;
 
   public function setTokens() {
@@ -18,14 +18,29 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
 
   public function getDocument() {
     $this->setTokens();
+    if (self::$id) {
+      return Document::get(self::$id);
+    }
     $documents = Document::all();
-    return $documents[count($documents) - 1];
+    return $documents[0];
   }
 
   public function testSaveCreate() {
     $this->setTokens();
     $document = new Document([
       'original_hash' => self::ORIGINAL_HASH,
+    ]);
+    $document->save();
+    self::$id = $document->id;
+    // Fetch document again
+    $document = $this->getDocument();
+    $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
+  }
+
+  public function testSaveDocCreate() {
+    $this->setTokens();
+    $document = new Document([
+      'file_path' => './tests/fixtures/example.pdf',
     ]);
     $document->save();
     self::$id = $document->id;
@@ -67,8 +82,8 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
   }
 
   public function testDelete() {
-    $document = $this->getDocument();
-    if ($document) {
+    $documents = Document::all();
+    foreach ($documents as $document) {
       $document->delete();
     }
     $documents = Document::all();
