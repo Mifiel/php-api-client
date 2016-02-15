@@ -56,9 +56,7 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
 
   public function testDelete() {
     $certificate = $this->getCertificate();
-    if ($certificate) {
-      $certificate->delete();
-    }
+    $certificate->delete();
     $certificates = Certificate::all();
     $this->assertEmpty($certificates);
   }
