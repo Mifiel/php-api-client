@@ -5,10 +5,10 @@ class Certificate extends BaseObject {
   protected static $resourceName = 'keys';
 
   public function save() {
-    if ($this->values->cer_file) {
-      $this->values->cer_file = [
-        'filename' => 'file.cer',
-        'contents' => fopen($this->values->cer_file, 'r')
+    if ($this->cer_file) {
+      $this->cer_file = [
+        'filename' => basename($this->cer_file),
+        'contents' => fopen($this->cer_file, 'r')
       ];
     }
     $response = ApiClient::post(
