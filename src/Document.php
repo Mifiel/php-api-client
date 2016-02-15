@@ -6,6 +6,7 @@ class Document extends BaseObject {
   protected $multipart = true;
 
   public function save() {
+    unset($this->values->file);
     if ($this->file_path) {
       $this->file = [
         'filename' => basename($this->file_path),
