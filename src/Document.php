@@ -5,10 +5,10 @@ class Document extends BaseObject {
   protected static $resourceName = 'documents';
 
   public function save() {
-    if ($this->file && file_exists($this->file)) {
+    if ($this->file_path) {
       $this->file = [
-        'filename' => basename($this->file),
-        'contents' => fopen($this->file, 'r')
+        'filename' => basename($this->file_path),
+        'contents' => fopen($this->file_path, 'r')
       ];
     }
     $response = ApiClient::post(
