@@ -48,21 +48,29 @@ class ApiClient {
     return self::$client->request(strtoupper($type), $path, $options);
   }
 
-  public static function build_multipart($params) {
+  private static function build_multipart($params) {
     $multipart_arr = array();
-    foreach ($params as $key => $value) {
-      if (is_array($value) && $value['filename']) {
-        $field = [
-          'name'      => $key,
-          'contents'  => $value['contents'],
-          'filename'  => $value['filename']
-        ];
-      } else {
-        $field = [ 'name' => $key, 'contents' => $value ];
+    foreach ($params as $name => $value) {
+      $field = self::build_field($name, $value);
+      if ($field){
+        array_push($multipart_arr, $field);
       }
-      array_push($multipart_arr, $field);
     }
     return $multipart_arr;
+  }
+
+  private static function build_field($name, $value) {
+    if (is_array($value) && $value['filename']) {
+      return [
+        'name'      => $name,
+        'contents'  => $value['contents'],
+        'filename'  => $value['filename']
+      ];
+    }
+    if (!empty($value)) {
+      return [ 'name' => $name, 'contents' => $value ];
+    }
+    return false;
   }
 
   public static function url(){
