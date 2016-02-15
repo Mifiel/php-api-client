@@ -64,7 +64,7 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->setTokens();
     $documents = Document::all();
     $this->assertTrue(is_array($documents));
-    $this->assertEquals('Mifiel\Document', get_class($documents[0]));
+    $this->assertEquals('Mifiel\Document', get_class(reset($documents)));
   }
 
   public function testGetProperties() {

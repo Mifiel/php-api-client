@@ -6,7 +6,7 @@ class Certificate extends BaseObject {
   protected $multipart = true;
 
   public function save() {
-    if ($this->cer_file) {
+    if (isset($this->values->cer_file)) {
       $this->cer_file = [
         'filename' => basename($this->cer_file),
         'contents' => fopen($this->cer_file, 'r')

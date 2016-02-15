@@ -7,11 +7,12 @@ class Document extends BaseObject {
 
   public function save() {
     unset($this->values->file);
-    if ($this->file_path) {
+    if (isset($this->values->file_path)) {
       $this->file = [
         'filename' => basename($this->file_path),
         'contents' => fopen($this->file_path, 'r')
       ];
+      unset($this->values->file_path);
     }
     parent::save();
   }

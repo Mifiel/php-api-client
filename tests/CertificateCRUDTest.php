@@ -18,7 +18,7 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
   public function getCertificate() {
     $this->setTokens();
     $certificates = Certificate::all();
-    return $certificates[count($certificates) - 1];
+    return end($certificates);
   }
 
   public function testCreate() {
@@ -37,7 +37,7 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->setTokens();
     $certificates = Certificate::all();
     $this->assertTrue(is_array($certificates));
-    $this->assertEquals('Mifiel\Certificate', get_class($certificates[0]));
+    $this->assertEquals('Mifiel\Certificate', get_class(reset($certificates)));
   }
 
   public function testGetProperties() {
@@ -56,7 +56,8 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
 
   public function testDelete() {
     $certificate = $this->getCertificate();
-    $certificate->delete();
+    if ($certificate)
+      $certificate->delete();
     $certificates = Certificate::all();
     $this->assertEmpty($certificates);
   }
