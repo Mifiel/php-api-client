@@ -31,14 +31,14 @@ class ApiClient {
   }
 
   public static function delete($path) {
-    return self::request('DELETE', $path, $params);
+    return self::request('DELETE', $path);
   }
 
   public static function put($path, $params=array(), $multipart=false) {
     return self::request('PUT', $path, $params, $multipart);
   }
 
-  private static function request($type, $path, $params, $multipart=false) {
+  private static function request($type, $path, $params=array(), $multipart=false) {
     $options = [];
     if ($multipart) {
       $options['multipart'] = self::build_multipart($params);
