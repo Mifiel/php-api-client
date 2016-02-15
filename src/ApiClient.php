@@ -44,7 +44,9 @@ class ApiClient {
     } else {
       $options = ['json' => $params];
     }
-
+    // $options['headers'] = [
+    //   'content-md5' => base64_encode(md5(json_encode($params), true))
+    // ];
     return self::$client->request(strtoupper($type), $path, $options);
   }
 
