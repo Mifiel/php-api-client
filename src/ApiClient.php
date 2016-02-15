@@ -69,8 +69,19 @@ class ApiClient {
         'filename'  => $value['filename']
       ];
     }
-    if (!empty($value)) {
-      return [ 'name' => $name, 'contents' => $value ];
+    if (!empty($value) && gettype($value) != 'NULL') {
+      if (is_bool($value)){
+        $value = $value === true ? '1' : '0';
+      } elseif (is_array($value) || is_object($value)) {
+        $value = json_encode($value);
+      } elseif (is_numeric($value)) {
+        $value = "'$value'";
+      }
+
+      return [
+        'name' => $name,
+        'contents' => $value
+      ];
     }
     return false;
   }
