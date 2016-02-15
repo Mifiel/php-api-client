@@ -40,9 +40,7 @@ class ApiClient {
 
   private static function request($type, $path, $params, $multipart=false) {
     if ($multipart) {
-      $multipart_arr = self::build_multipart($params);
-      $md5Header = $multipart_arr['content-md5'];
-      $options = ['multipart' => $multipart_arr['contents']];
+      $options = ['multipart' => self::build_multipart($params)];
     } else {
       $options = ['json' => $params];
     }
@@ -64,11 +62,7 @@ class ApiClient {
       }
       array_push($multipart_arr, $field);
     }
-    $md5Header = empty($multipart_arr) ? '' : md5(json_encode($multipart_arr), true);
-    return [
-      'contents'    => $multipart_arr,
-      'content-md5' => $md5Header
-    ];
+    return $multipart_arr;
   }
 
   public static function url(){
