@@ -22,6 +22,13 @@ abstract class BaseObject {
     return $return;
   }
 
+  public static function get($id) {
+    self::validateResuorceName();
+    $response = ApiClient::get(static::$resourceName . '/' . $id);
+    $response_body = json_decode($response->getBody());
+    return new static($response_body);
+  }
+
   private static function validateResuorceName() {
     if (static::$resourceName == null){
       throw new ArgumentError('You must declare resourceName', 1);
