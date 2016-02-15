@@ -3,6 +3,7 @@ namespace Mifiel;
 
 class Certificate extends BaseObject {
   protected static $resourceName = 'keys';
+  protected $multipart = true;
 
   public function save() {
     if ($this->cer_file) {
@@ -11,11 +12,6 @@ class Certificate extends BaseObject {
         'contents' => fopen($this->cer_file, 'r')
       ];
     }
-    $response = ApiClient::post(
-      static::$resourceName,
-      (array) $this->values,
-      true
-    );
-    $this->values = (object) json_decode($response->getBody());
+    parent::save();
   }
 }

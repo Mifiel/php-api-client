@@ -6,6 +6,7 @@ class ArgumentError extends \Exception {}
 abstract class BaseObject {
 
   protected $values;
+  protected $multipart = false;
 
   public function __construct($values) {
     $this->values = (object) $values;
@@ -40,12 +41,14 @@ abstract class BaseObject {
     if ($this->id) {
       $response = ApiClient::put(
         static::$resourceName . '/' . $this->id,
-        (array) $this->values
+        (array) $this->values,
+        $this->multipart
       );
     } else {
       $response = ApiClient::post(
         static::$resourceName,
-        (array) $this->values
+        (array) $this->values,
+        $this->multipart
       );
     }
     $this->values = (object) json_decode($response->getBody());

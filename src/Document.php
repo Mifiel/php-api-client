@@ -3,6 +3,7 @@ namespace Mifiel;
 
 class Document extends BaseObject {
   protected static $resourceName = 'documents';
+  protected $multipart = true;
 
   public function save() {
     if ($this->file_path) {
@@ -11,11 +12,6 @@ class Document extends BaseObject {
         'contents' => fopen($this->file_path, 'r')
       ];
     }
-    $response = ApiClient::post(
-      static::$resourceName,
-      (array) $this->values,
-      true
-    );
-    $this->values = (object) json_decode($response->getBody());
+    parent::save();
   }
 }
