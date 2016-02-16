@@ -1,4 +1,6 @@
-# Mifiel PHP Api Client
+# Mifiel PHP API Client
+
+[![Build Status][travis-image]][travis-url]
 
 ## Installation
 
@@ -25,3 +27,6 @@ You will first need to create an account in mifiel.com since the `APP_ID` and `A
 ```php
   Mifiel::setTokens('app-id', 'app-secret');
 ```
+
+[travis-image]: https://travis-ci.org/Mifiel/php-api-client.svg?branch=master
+[travis-url]: https://travis-ci.org/Mifiel/php-api-client
