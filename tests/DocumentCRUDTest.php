@@ -22,7 +22,7 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
       return Document::get(self::$id);
     }
     $documents = Document::all();
-    return $documents[0];
+    return reset($documents);
   }
 
   public function testSaveCreate() {
