@@ -114,6 +114,7 @@ Certificate methods:
     $certificate = new Certificate([
       'file' => 'path/to/my-certificate.cer'
     ])
+    $certificate->save();
   ```
 
 - Delete
