@@ -14,4 +14,9 @@ class Certificate extends BaseObject {
     }
     parent::save();
   }
+
+  public static function sat() {
+    $response = ApiClient::get(static::$resourceName . '/sat');
+    return json_decode($response->getBody());
+  }
 }
