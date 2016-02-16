@@ -1,5 +1,6 @@
 {
   "name": "mifiel/api-client",
+  "version": "1.0.0",
   "description": "Mifiel API Client for PHP",
   "type": "library",
   "require": {
