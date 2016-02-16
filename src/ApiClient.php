@@ -85,8 +85,13 @@ class ApiClient {
     return false;
   }
 
-  public static function url(){
-    return self::$url;
+  public static function url($url=null){
+    if ($url){
+      self::$url = $url;
+      self::setClient();
+    } else {
+      return self::$url;
+    }
   }
 
   public static function appId($appId=null) {
