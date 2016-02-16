@@ -1,6 +1,7 @@
 # Mifiel PHP API Client
 
 [![Build Status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-image]
 
 ## Installation
 
@@ -125,3 +126,5 @@ Certificate methods:
 
 [travis-image]: https://travis-ci.org/Mifiel/php-api-client.svg?branch=master
 [travis-url]: https://travis-ci.org/Mifiel/php-api-client
+[coveralls-image]: https://coveralls.io/repos/github/Mifiel/php-api-client/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/Mifiel/php-api-client?branch=master
