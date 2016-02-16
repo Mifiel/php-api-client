@@ -20,7 +20,7 @@ class CertificateCRUDTest extends MifielTests {
   public function testCreate() {
     $this->setTokens();
     $certificate = new Certificate([
-      'cer_file' => './tests/fixtures/FIEL_AAA010101AAA.cer'
+      'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
     ]);
     $certificate->save();
     self::$id = $certificate->id;
