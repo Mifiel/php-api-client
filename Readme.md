@@ -1,7 +1,7 @@
 # Mifiel PHP API Client
 
 [![Build Status][travis-image]][travis-url]
-[![Coverage Status][coveralls-image]][coveralls-image]
+[![Coverage Status][coveralls-image]][coveralls-url]
 
 ## Installation
 
