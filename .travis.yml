@@ -6,6 +6,13 @@ php:
   - 7.0
   - hhvm
 
-install: composer install
+install:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev --no-interaction
 
-script: vendor/bin/phpunit --exclude-group internet
+script:
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit --exclude-group internet
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
