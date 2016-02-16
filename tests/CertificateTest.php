@@ -5,6 +5,9 @@ use Mifiel\ApiClient,
     Mifiel\Certificate,
     Mockery as m;
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 class CertificateTest extends \PHPUnit_Framework_TestCase {
 
   /**
@@ -21,29 +24,33 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
       'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
     ]);
 
-    $client = m::mock('ApiClient');
-    $client->shouldReceive('post')
-           ->with('keys', m::type('Array'), true)
-           ->andReturn(new \GuzzleHttp\Psr7\Response)
-           ->once();
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('post')
+      ->with('keys', m::type('Array'), true)
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
 
-    $certificate->setClient($client);
     $certificate->save();
   }
 
   public function testAll() {
+    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+    $mockResponse->shouldReceive('getBody')
+                 ->once()
+                 ->andReturn('[]');
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('get')
+      ->with('keys')
+      ->andReturn($mockResponse)
+      ->once();
+
     $certificates = Certificate::all();
-    $this->assertTrue(is_array($certificates));
-    $this->assertEquals('Mifiel\Certificate', get_class(reset($certificates)));
   }
 
-  public function testGetProperties() {
-    $certificate = $this->getCertificate();
-    $this->assertEquals(self::$id, $certificate->id);
-  }
-
-  public function testSetProperties() {
-    $certificate = $this->getCertificate();
+  public function testSetGetProperties() {
+    $certificate = new Certificate([
+      'certificate_number' => '20001000000200001410'
+    ]);
     $this->assertEquals('20001000000200001410', $certificate->certificate_number);
 
     $certificate_number = 'blah';
@@ -52,11 +59,17 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
   }
 
   public function testDelete() {
-    $certificate = $this->getCertificate();
-    if ($certificate)
-      $certificate->delete();
-    $certificates = Certificate::all();
-    $this->assertEmpty($certificates);
+    $certificate = new Certificate([
+      'id' => 'some-id'
+    ]);
+
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('delete')
+      ->with('keys/some-id')
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+
+    $certificate->delete();
   }
 
 }
