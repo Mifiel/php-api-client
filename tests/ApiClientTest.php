@@ -1,7 +1,7 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient;
+use Mifiel\ApiClient as Mifiel;
 
 class ApiClientTest extends MifielTests {
 
@@ -9,17 +9,17 @@ class ApiClientTest extends MifielTests {
   private $appSecret = 'appSecret';
 
   public function testCreation() {
-    ApiClient::setTokens($this->appId, $this->appSecret);
+    Mifiel::setTokens($this->appId, $this->appSecret);
 
-    $this->assertEquals(ApiClient::appId(), $this->appId);
-    $this->assertEquals(ApiClient::appSecret(), $this->appSecret);
+    $this->assertEquals(Mifiel::appId(), $this->appId);
+    $this->assertEquals(Mifiel::appSecret(), $this->appSecret);
   }
 
   public function testSetters() {
-    ApiClient::appId($this->appId);
-    ApiClient::appSecret($this->appSecret);
+    Mifiel::appId($this->appId);
+    Mifiel::appSecret($this->appSecret);
 
-    $this->assertEquals(ApiClient::appId(), $this->appId);
-    $this->assertEquals(ApiClient::appSecret(), $this->appSecret);
+    $this->assertEquals(Mifiel::appId(), $this->appId);
+    $this->assertEquals(Mifiel::appSecret(), $this->appSecret);
   }
 }
