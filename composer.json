@@ -4,7 +4,8 @@
   "type": "library",
   "require": {
     "php": ">=5.3.3",
-    "99designs/http-signatures": "^2.0"
+    "acquia/http-hmac-php": "^2.1",
+    "guzzlehttp/guzzle": "~6.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.1"

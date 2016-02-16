@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         files: ['**/**/*.php'],
         tasks: ['phpunit'],
         options: {
-          spawn: false,
+          spawn: true,
         },
       },
     },
@@ -18,7 +18,8 @@ module.exports = function(grunt) {
       },
       options: {
         bin: 'vendor/bin/phpunit',
-        colors: true
+        colors: true,
+        coverageHtml: 'coverage/'
       }
     }
   });
