@@ -50,10 +50,15 @@ Document methods:
 
 - Create:
 
+> Use only **original_hash** if you dont want us to have the file.<br>
+> Only **file** or **original_hash** must be provided.
+
   ```php
     use Mifiel\Document;
     $document = new Document([
       'file' => 'path/to/my-file.pdf',
+      // OR
+      'original_hash' => hash('sha256', 'some-file-contents'),
       'signatories' => [
         { 
           'name' => 'Signer 1', 
@@ -67,6 +72,7 @@ Document methods:
          }
       ]
     ])
+    $document->save();
   ```
 
 - Delete
