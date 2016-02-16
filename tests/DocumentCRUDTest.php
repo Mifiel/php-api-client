@@ -12,7 +12,7 @@ class DocumentCRUDTest extends MifielTests {
   public function getDocument() {
     $this->setTokens();
     if (self::$id) {
-      return Document::get(self::$id);
+      return Document::find(self::$id);
     }
     $documents = Document::all();
     return reset($documents);
