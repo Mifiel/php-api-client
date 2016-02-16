@@ -1,7 +1,7 @@
 <?php
 // read http://www.sitepoint.com/unit-testing-guzzlephp/
 // for testing without server
-namespace Mifiel\Tests;
+namespace Mifiel\Tests\Integration;
 
 use Mifiel\ApiClient as Mifiel;
 

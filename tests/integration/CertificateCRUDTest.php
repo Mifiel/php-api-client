@@ -1,5 +1,5 @@
 <?php
-namespace Mifiel\Tests;
+namespace Mifiel\Tests\Integration;
 
 use Mifiel\ApiClient,
     Mifiel\Certificate;
