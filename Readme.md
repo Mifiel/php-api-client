@@ -35,7 +35,7 @@ Document methods:
 
   ```php
     use Mifiel\Document;
-    $document = Document::find('id')
+    $document = Document::find('id');
     $document->original_hash;
     $document->file;
     $document->file_signed;
@@ -107,7 +107,7 @@ Certificate methods:
   ```php
     use Mifiel\Certificate;
     $certificate = new Certificate([
-      file: 'path/to/my-certificate.cer'
+      'file' => 'path/to/my-certificate.cer'
     ])
   ```
 
