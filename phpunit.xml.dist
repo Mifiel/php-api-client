@@ -13,7 +13,9 @@
          stopOnFailure="false"
          verbose="true"
 >
-  <log type="coverage-clover" target="build/logs/clover.xml"/>
+  <logging>
+    <log type="coverage-clover" target="build/logs/clover.xml"/>
+  </logging>
   <testsuites>
     <testsuite name="Mifiel PHP API client test suite">
       <directory suffix="Test.php">./tests</directory>
