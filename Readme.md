@@ -22,11 +22,100 @@ To start using the API you will need an `APP_ID` and a `APP_SECRET` which will b
 
 You will first need to create an account in mifiel.com since the `APP_ID` and `APP_SECRET` will be linked to your account.
 
-### Config
+Then you can configure the library with:
 
 ```php
-  Mifiel::setTokens('app-id', 'app-secret');
+  use Mifiel\ApiClient as Mifiel;
+  Mifiel::setTokens('APP_ID', 'APP_SECRET');
 ```
+
+Document methods:
+
+- Find:
+
+  ```php
+    use Mifiel\Document;
+    $document = Document::find('id')
+    $document->original_hash;
+    $document->file;
+    $document->file_signed;
+    # ...
+  ```
+
+- Find all:
+
+  ```php
+    use Mifiel\Document;
+    $documents = Document::all();
+  ```
+
+- Create:
+
+  ```php
+    use Mifiel\Document;
+    $document = new Document([
+      'file' => 'path/to/my-file.pdf',
+      'signatories' => [
+        { 
+          'name' => 'Signer 1', 
+          'email' => 'signer1@email.com', 
+          'tax_id' =>  'AAA010101AAA' 
+        },
+        { 
+          'name' => 'Signer 2', 
+          'email' => 'signer2@email.com', 
+          'tax_id' =>  'AAA010102AAA'
+         }
+      ]
+    ])
+  ```
+
+- Delete
+
+  ```php
+    $document->delete();
+  ```
+
+Certificate methods:
+
+- Sat Certificates
+
+  ```php
+    use Mifiel\Certificate;
+    $sat_certificates = Certificate::sat();
+  ```
+
+- Find:
+
+  ```php
+    use Mifiel\Certificate;
+    $certificate = Certificate::find('id');
+    $certificate->cer_hex;
+    $certificate->type_of;
+    # ...
+  ```
+
+- Find all:
+
+  ```php
+    use Mifiel\Certificate;
+    $certificates = Certificate::all();
+  ```
+
+- Create
+  
+  ```php
+    use Mifiel\Certificate;
+    $certificate = new Certificate([
+      file: 'path/to/my-certificate.cer'
+    ])
+  ```
+
+- Delete
+
+  ```php
+    $certificate->delete();
+  ```
 
 [travis-image]: https://travis-ci.org/Mifiel/php-api-client.svg?branch=master
 [travis-url]: https://travis-ci.org/Mifiel/php-api-client
