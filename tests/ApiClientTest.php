@@ -5,22 +5,21 @@ use Mifiel\ApiClient;
 
 class ApiClientTest extends MifielTests {
 
-  public function testCreation() {
-    $appId = 'appId';
-    $appSecret = 'appSecret';
-    ApiClient::setTokens($appId, $appSecret);
+  private $appId = 'appId';
+  private $appSecret = 'appSecret';
 
-    $this->assertEquals(ApiClient::appId(), $appId);
-    $this->assertEquals(ApiClient::appSecret(), $appSecret);
+  public function testCreation() {
+    ApiClient::setTokens($this->appId, $this->appSecret);
+
+    $this->assertEquals(ApiClient::appId(), $this->appId);
+    $this->assertEquals(ApiClient::appSecret(), $this->appSecret);
   }
 
   public function testSetters() {
-    $appId = 'appId';
-    $appSecret = 'appSecret';
-    ApiClient::appId($appId);
-    ApiClient::appSecret($appSecret);
+    ApiClient::appId($this->appId);
+    ApiClient::appSecret($this->appSecret);
 
-    $this->assertEquals(ApiClient::appId(), $appId);
-    $this->assertEquals(ApiClient::appSecret(), $appSecret);
+    $this->assertEquals(ApiClient::appId(), $this->appId);
+    $this->assertEquals(ApiClient::appSecret(), $this->appSecret);
   }
 }
