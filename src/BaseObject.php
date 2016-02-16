@@ -23,7 +23,7 @@ abstract class BaseObject {
     return $return;
   }
 
-  public static function get($id) {
+  public static function find($id) {
     self::validateResuorceName();
     $response = ApiClient::get(static::$resourceName . '/' . $id);
     $response_body = json_decode($response->getBody());
