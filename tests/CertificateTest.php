@@ -7,6 +7,7 @@ use Mifiel\ApiClient,
 
 /**
  * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
  */
 class CertificateTest extends \PHPUnit_Framework_TestCase {
 
@@ -19,7 +20,7 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
     }
   }
 
-  public function testUnitCreate() {
+  public function testCreate() {
     $certificate = new Certificate([
       'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
     ]);
