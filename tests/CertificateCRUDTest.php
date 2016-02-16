@@ -4,16 +4,9 @@ namespace Mifiel\Tests;
 use Mifiel\ApiClient,
     Mifiel\Certificate;
 
-class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
+class CertificateCRUDTest extends MifielTests {
 
   private static $id;
-
-  public function setTokens() {
-    ApiClient::setTokens(
-      '44c783d37ef12d3912f911c7b3ac44d657d83b17',
-      'm7MvN0kvmF4/TbYGb7ImlWtUbfQ2XSj+STzvmLBCzOI2L+Kgr2ajaOkftQevv8/KJILevxlpvFWpVbj7hczQQg=='
-    );
-  }
 
   public function getCertificate() {
     $this->setTokens();

@@ -3,7 +3,7 @@ namespace Mifiel\Tests;
 
 use Mifiel\ApiClient;
 
-class ApiClientTest extends \PHPUnit_Framework_TestCase {
+class ApiClientTest extends MifielTests {
 
   public function testCreation() {
     $appId = 'appId';

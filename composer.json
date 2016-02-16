@@ -13,6 +13,9 @@
   "autoload": {
     "psr-4": {"Mifiel\\": "src/"}
   },
+  "autoload-dev": {
+    "psr-4": { "Mifiel\\Tests\\": "tests/" }
+  },
   "license": "MIT",
   "authors": [
     {
