@@ -8,7 +8,7 @@ abstract class BaseObject {
   protected $values;
   protected $multipart = false;
 
-  public function __construct($values) {
+  public function __construct($values=array()) {
     $this->values = (object) $values;
   }
 

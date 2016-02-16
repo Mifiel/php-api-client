@@ -4,6 +4,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     watch: {
+      clear: {
+        //clear terminal on any watch task. beauty.
+        files: ['**/**/*.php'],
+        tasks: ['clear']
+      },
       scripts: {
         files: ['**/**/*.php'],
         tasks: ['phpunit'],
@@ -24,6 +29,7 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-clear');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-phpunit');
 
