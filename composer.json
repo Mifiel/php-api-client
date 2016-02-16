@@ -1,7 +1,14 @@
 {
   "name": "mifiel/api-client",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Mifiel API Client for PHP",
+  "keywords": [
+    "Firma electrónica",
+    "Firma electrónica Avanzada",
+    "Firma documentos electrónicos",
+    "FIEL",
+    "Mifiel"
+  ],
   "type": "library",
   "require": {
     "php": ">=5.5",
@@ -19,6 +26,12 @@
   },
   "license": "MIT",
   "authors": [
+    {
+      "name": "Mifiel Team and Contributors",
+      "email": "hola@mifiel.com",
+      "homepage": "https://www.mifiel.com",
+      "role": "Publisher"
+    },
     {
       "name": "Genaro Madrid",
       "email": "genmadrid@gmail.com"
