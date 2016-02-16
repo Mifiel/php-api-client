@@ -18,6 +18,9 @@ class DocumentCRUDTest extends MifielTests {
     return reset($documents);
   }
 
+  /**
+   * @group internet
+   */
   public function testSaveCreate() {
     $this->setTokens();
     $document = new Document([
@@ -30,6 +33,9 @@ class DocumentCRUDTest extends MifielTests {
     $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
   }
 
+  /**
+   * @group internet
+   */
   public function testSaveDocCreate() {
     $this->setTokens();
     $document = new Document([
@@ -42,6 +48,9 @@ class DocumentCRUDTest extends MifielTests {
     $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
   }
 
+  /**
+   * @group internet
+   */
   public function testSaveUpdate() {
     $document = $this->getDocument();
     $this->assertEquals('', $document->callback_url);
@@ -53,6 +62,9 @@ class DocumentCRUDTest extends MifielTests {
     $this->assertEquals($callback_url, $document->callback_url);
   }
 
+  /**
+   * @group internet
+   */
   public function testAll() {
     $this->setTokens();
     $documents = Document::all();
@@ -60,11 +72,17 @@ class DocumentCRUDTest extends MifielTests {
     $this->assertEquals('Mifiel\Document', get_class(reset($documents)));
   }
 
+  /**
+   * @group internet
+   */
   public function testGetProperties() {
     $document = $this->getDocument();
     $this->assertEquals(self::$id, $document->id);
   }
 
+  /**
+   * @group internet
+   */
   public function testSetProperties() {
     $document = $this->getDocument();
     $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
@@ -74,6 +92,9 @@ class DocumentCRUDTest extends MifielTests {
     $this->assertEquals($original_hash, $document->original_hash);
   }
 
+  /**
+   * @group internet
+   */
   public function testDelete() {
     $documents = Document::all();
     foreach ($documents as $document) {

@@ -14,6 +14,9 @@ class CertificateCRUDTest extends MifielTests {
     return end($certificates);
   }
 
+  /**
+   * @group internet
+   */
   public function testCreate() {
     $this->setTokens();
     $certificate = new Certificate([
@@ -26,6 +29,9 @@ class CertificateCRUDTest extends MifielTests {
     $this->assertEquals(self::$id, $certificate->id);
   }
 
+  /**
+   * @group internet
+   */
   public function testAll() {
     $this->setTokens();
     $certificates = Certificate::all();
@@ -33,11 +39,17 @@ class CertificateCRUDTest extends MifielTests {
     $this->assertEquals('Mifiel\Certificate', get_class(reset($certificates)));
   }
 
+  /**
+   * @group internet
+   */
   public function testGetProperties() {
     $certificate = $this->getCertificate();
     $this->assertEquals(self::$id, $certificate->id);
   }
 
+  /**
+   * @group internet
+   */
   public function testSetProperties() {
     $certificate = $this->getCertificate();
     $this->assertEquals('20001000000200001410', $certificate->certificate_number);
@@ -47,6 +59,9 @@ class CertificateCRUDTest extends MifielTests {
     $this->assertEquals($certificate_number, $certificate->certificate_number);
   }
 
+  /**
+   * @group internet
+   */
   public function testDelete() {
     $certificate = $this->getCertificate();
     if ($certificate)
