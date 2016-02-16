@@ -130,4 +130,8 @@ class ApiClient {
       'handler' => $stack,
     ]);
   }
+
+  public static function getClient() {
+    return self::$client;
+  }
 }
