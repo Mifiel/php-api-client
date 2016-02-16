@@ -58,7 +58,7 @@ Document methods:
     $document = new Document([
       'file' => 'path/to/my-file.pdf',
       // OR
-      'original_hash' => hash('sha256', 'some-file-contents'),
+      'original_hash' => hash('sha256', file_get_contents('path/to/my-file.pdf')),
       'signatories' => [
         { 
           'name' => 'Signer 1', 
@@ -78,7 +78,8 @@ Document methods:
 - Delete
 
   ```php
-    $document->delete();
+    use Mifiel\Document;
+    Document::delete('id');
   ```
 
 Certificate methods:
@@ -120,7 +121,8 @@ Certificate methods:
 - Delete
 
   ```php
-    $certificate->delete();
+    use Mifiel\Certificate;
+    Certificate::delete('id');
   ```
 
 ## Contributing

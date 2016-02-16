@@ -54,10 +54,10 @@ abstract class BaseObject {
     $this->values = (object) json_decode($response->getBody());
   }
 
-  public function delete(){
+  public static function delete($id){
     self::validateResuorceName();
     $response = ApiClient::delete(
-      static::$resourceName . '/' . $this->id
+      static::$resourceName . '/' . $id
     );
   }
 
