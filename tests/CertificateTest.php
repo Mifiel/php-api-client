@@ -34,11 +34,24 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
     $certificate->save();
   }
 
+  public function testUpdate() {
+    $certificate = new Certificate();
+    $certificate->id = 'some-id';
+
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('put')
+      ->with('keys/some-id', array('id' => 'some-id'), true)
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+
+    $certificate->save();
+  }
+
   public function testAll() {
     $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
     $mockResponse->shouldReceive('getBody')
                  ->once()
-                 ->andReturn('[]');
+                 ->andReturn('[{"id": "some-id"}]');
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('keys')
@@ -46,6 +59,20 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
       ->once();
 
     $certificates = Certificate::all();
+  }
+
+  public function testFind() {
+    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+    $mockResponse->shouldReceive('getBody')
+                 ->once()
+                 ->andReturn('{"id": "some-id"}');
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('get')
+      ->with('keys/some-id')
+      ->andReturn($mockResponse)
+      ->once();
+
+    Certificate::find('some-id');
   }
 
   public function testSetGetProperties() {
@@ -71,6 +98,16 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
       ->once();
 
     $certificate->delete();
+  }
+
+  public function testSat() {
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('get')
+      ->with('keys/sat')
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+
+    Certificate::sat();
   }
 
 }
