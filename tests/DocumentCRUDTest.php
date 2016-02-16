@@ -1,20 +1,13 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient;
-use Mifiel\Document;
+use Mifiel\ApiClient,
+    Mifiel\Document;
 
-class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
+class DocumentCRUDTest extends MifielTests {
 
   const ORIGINAL_HASH = 'f4dee35b52fc06aa9d47f6297c7cff51e8bcebf90683da234a07ed507dafd57b';
   private static $id;
-
-  public function setTokens() {
-    ApiClient::setTokens(
-      '44c783d37ef12d3912f911c7b3ac44d657d83b17',
-      'm7MvN0kvmF4/TbYGb7ImlWtUbfQ2XSj+STzvmLBCzOI2L+Kgr2ajaOkftQevv8/KJILevxlpvFWpVbj7hczQQg=='
-    );
-  }
 
   public function getDocument() {
     $this->setTokens();

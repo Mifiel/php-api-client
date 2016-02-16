@@ -1,12 +1,12 @@
 <?php
 namespace Mifiel;
 
-use GuzzleHttp\Psr7\Request;
-use Acquia\Hmac\Guzzle\HmacAuthMiddleware;
-use Acquia\Hmac\RequestSigner;
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use Mifiel\Digest\ApiAuthGemDigest;
+use GuzzleHttp\Psr7\Request,
+    Acquia\Hmac\Guzzle\HmacAuthMiddleware,
+    Acquia\Hmac\RequestSigner,
+    GuzzleHttp\Client,
+    GuzzleHttp\HandlerStack,
+    Mifiel\Digest\ApiAuthGemDigest;
 
 class ApiClient {
 

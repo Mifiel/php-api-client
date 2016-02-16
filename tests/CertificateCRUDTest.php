@@ -1,8 +1,8 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient;
-use Mifiel\Certificate;
+use Mifiel\ApiClient,
+    Mifiel\Certificate;
 
 class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
 
