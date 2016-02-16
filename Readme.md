@@ -117,5 +117,13 @@ Certificate methods:
     $certificate->delete();
   ```
 
+## Contributing
+
+1. Fork it ( https://github.com/Mifiel/php-api-client/fork )
+2. Create your feature branch (`git checkout -b feature/my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin feature/my-new-feature`)
+5. Create a new Pull Request
+
 [travis-image]: https://travis-ci.org/Mifiel/php-api-client.svg?branch=master
 [travis-url]: https://travis-ci.org/Mifiel/php-api-client
