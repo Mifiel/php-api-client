@@ -1,20 +1,13 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient;
-use Mifiel\Document;
+use Mifiel\ApiClient,
+    Mifiel\Document;
 
-class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
+class DocumentCRUDTest extends MifielTests {
 
   const ORIGINAL_HASH = 'f4dee35b52fc06aa9d47f6297c7cff51e8bcebf90683da234a07ed507dafd57b';
   private static $id;
-
-  public function setTokens() {
-    ApiClient::setTokens(
-      '44c783d37ef12d3912f911c7b3ac44d657d83b17',
-      'm7MvN0kvmF4/TbYGb7ImlWtUbfQ2XSj+STzvmLBCzOI2L+Kgr2ajaOkftQevv8/KJILevxlpvFWpVbj7hczQQg=='
-    );
-  }
 
   public function getDocument() {
     $this->setTokens();
@@ -25,6 +18,9 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
     return reset($documents);
   }
 
+  /**
+   * @group internet
+   */
   public function testSaveCreate() {
     $this->setTokens();
     $document = new Document([
@@ -37,6 +33,9 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
   }
 
+  /**
+   * @group internet
+   */
   public function testSaveDocCreate() {
     $this->setTokens();
     $document = new Document([
@@ -49,6 +48,9 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
   }
 
+  /**
+   * @group internet
+   */
   public function testSaveUpdate() {
     $document = $this->getDocument();
     $this->assertEquals('', $document->callback_url);
@@ -60,6 +62,9 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($callback_url, $document->callback_url);
   }
 
+  /**
+   * @group internet
+   */
   public function testAll() {
     $this->setTokens();
     $documents = Document::all();
@@ -67,11 +72,17 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('Mifiel\Document', get_class(reset($documents)));
   }
 
+  /**
+   * @group internet
+   */
   public function testGetProperties() {
     $document = $this->getDocument();
     $this->assertEquals(self::$id, $document->id);
   }
 
+  /**
+   * @group internet
+   */
   public function testSetProperties() {
     $document = $this->getDocument();
     $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
@@ -81,6 +92,9 @@ class DocumentCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($original_hash, $document->original_hash);
   }
 
+  /**
+   * @group internet
+   */
   public function testDelete() {
     $documents = Document::all();
     foreach ($documents as $document) {

@@ -1,19 +1,12 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient;
-use Mifiel\Certificate;
+use Mifiel\ApiClient,
+    Mifiel\Certificate;
 
-class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
+class CertificateCRUDTest extends MifielTests {
 
   private static $id;
-
-  public function setTokens() {
-    ApiClient::setTokens(
-      '44c783d37ef12d3912f911c7b3ac44d657d83b17',
-      'm7MvN0kvmF4/TbYGb7ImlWtUbfQ2XSj+STzvmLBCzOI2L+Kgr2ajaOkftQevv8/KJILevxlpvFWpVbj7hczQQg=='
-    );
-  }
 
   public function getCertificate() {
     $this->setTokens();
@@ -21,6 +14,9 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
     return end($certificates);
   }
 
+  /**
+   * @group internet
+   */
   public function testCreate() {
     $this->setTokens();
     $certificate = new Certificate([
@@ -33,6 +29,9 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(self::$id, $certificate->id);
   }
 
+  /**
+   * @group internet
+   */
   public function testAll() {
     $this->setTokens();
     $certificates = Certificate::all();
@@ -40,11 +39,17 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('Mifiel\Certificate', get_class(reset($certificates)));
   }
 
+  /**
+   * @group internet
+   */
   public function testGetProperties() {
     $certificate = $this->getCertificate();
     $this->assertEquals(self::$id, $certificate->id);
   }
 
+  /**
+   * @group internet
+   */
   public function testSetProperties() {
     $certificate = $this->getCertificate();
     $this->assertEquals('20001000000200001410', $certificate->certificate_number);
@@ -54,6 +59,9 @@ class CertificateCRUDTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($certificate_number, $certificate->certificate_number);
   }
 
+  /**
+   * @group internet
+   */
   public function testDelete() {
     $certificate = $this->getCertificate();
     if ($certificate)

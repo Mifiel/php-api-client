@@ -3,24 +3,23 @@ namespace Mifiel\Tests;
 
 use Mifiel\ApiClient;
 
-class ApiClientTest extends \PHPUnit_Framework_TestCase {
+class ApiClientTest extends MifielTests {
+
+  private $appId = 'appId';
+  private $appSecret = 'appSecret';
 
   public function testCreation() {
-    $appId = 'appId';
-    $appSecret = 'appSecret';
-    ApiClient::setTokens($appId, $appSecret);
+    ApiClient::setTokens($this->appId, $this->appSecret);
 
-    $this->assertEquals(ApiClient::appId(), $appId);
-    $this->assertEquals(ApiClient::appSecret(), $appSecret);
+    $this->assertEquals(ApiClient::appId(), $this->appId);
+    $this->assertEquals(ApiClient::appSecret(), $this->appSecret);
   }
 
   public function testSetters() {
-    $appId = 'appId';
-    $appSecret = 'appSecret';
-    ApiClient::appId($appId);
-    ApiClient::appSecret($appSecret);
+    ApiClient::appId($this->appId);
+    ApiClient::appSecret($this->appSecret);
 
-    $this->assertEquals(ApiClient::appId(), $appId);
-    $this->assertEquals(ApiClient::appSecret(), $appSecret);
+    $this->assertEquals(ApiClient::appId(), $this->appId);
+    $this->assertEquals(ApiClient::appSecret(), $this->appSecret);
   }
 }

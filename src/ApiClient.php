@@ -1,12 +1,12 @@
 <?php
 namespace Mifiel;
 
-use GuzzleHttp\Psr7\Request;
-use Acquia\Hmac\Guzzle\HmacAuthMiddleware;
-use Acquia\Hmac\RequestSigner;
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use Mifiel\Digest\ApiAuthGemDigest;
+use GuzzleHttp\Psr7\Request,
+    Acquia\Hmac\Guzzle\HmacAuthMiddleware,
+    Acquia\Hmac\RequestSigner,
+    GuzzleHttp\Client,
+    GuzzleHttp\HandlerStack,
+    Mifiel\Digest\ApiAuthGemDigest;
 
 class ApiClient {
 
@@ -18,7 +18,7 @@ class ApiClient {
   public static function setTokens($appId, $appSecret) {
     self::$appId = $appId;
     self::$appSecret = $appSecret;
-    self::$url = 'http://genaro-book.local:3000/api/v1/';
+    self::$url = 'https://www.mifiel.com/api/v1/';
     self::setClient();
   }
 
@@ -85,8 +85,13 @@ class ApiClient {
     return false;
   }
 
-  public static function url(){
-    return self::$url;
+  public static function url($url=null){
+    if ($url){
+      self::$url = $url;
+      self::setClient();
+    } else {
+      return self::$url;
+    }
   }
 
   public static function appId($appId=null) {
@@ -124,5 +129,9 @@ class ApiClient {
       'base_uri' => self::url(),
       'handler' => $stack,
     ]);
+  }
+
+  public static function getClient() {
+    return self::$client;
   }
 }
