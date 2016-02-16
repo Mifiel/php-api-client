@@ -98,7 +98,7 @@ class DocumentCRUDTest extends MifielTests {
   public function testDelete() {
     $documents = Document::all();
     foreach ($documents as $document) {
-      $document->delete();
+      Document::delete($document->id);
     }
     $documents = Document::all();
     $this->assertEmpty($documents);

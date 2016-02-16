@@ -65,7 +65,7 @@ class CertificateCRUDTest extends MifielTests {
   public function testDelete() {
     $certificate = $this->getCertificate();
     if ($certificate)
-      $certificate->delete();
+      Certificate::delete($certificate->id);
     $certificates = Certificate::all();
     $this->assertEmpty($certificates);
   }

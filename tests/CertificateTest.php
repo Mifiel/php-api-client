@@ -87,17 +87,13 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
   }
 
   public function testDelete() {
-    $certificate = new Certificate([
-      'id' => 'some-id'
-    ]);
-
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('delete')
       ->with('keys/some-id')
       ->andReturn(new \GuzzleHttp\Psr7\Response)
       ->once();
 
-    $certificate->delete();
+    Certificate::delete('some-id');
   }
 
   public function testSat() {

@@ -88,17 +88,13 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
   }
 
   public function testDelete() {
-    $document = new Document([
-      'id' => 'some-id'
-    ]);
-
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('delete')
       ->with('documents/some-id')
       ->andReturn(new \GuzzleHttp\Psr7\Response)
       ->once();
 
-    $document->delete();
+    Document::delete('some-id');
   }
 
 }
