@@ -15,7 +15,7 @@
 >
   <log type="coverage-clover" target="build/logs/clover.xml"/>
   <testsuites>
-    <testsuite name="HTTP Signatures Test Suite">
+    <testsuite name="Mifiel PHP API client test suite">
       <directory suffix="Test.php">./tests</directory>
     </testsuite>
   </testsuites>
