@@ -4,7 +4,7 @@
 
 ## Installation
 
-Add `mifiel/api-client` to your [composer.json](https://getcomposer.org/).
+Just run `composer require mifiel/api-client` in the root your project or add `mifiel/api-client` to your [composer.json](https://getcomposer.org/).
 
 ```json
   "require": {
@@ -13,8 +13,6 @@ Add `mifiel/api-client` to your [composer.json](https://getcomposer.org/).
 ```
 
 And then execute `composer install`.
-
-Or [download](http://example.com) the source of this repo and include it in your project.
 
 ## Usage
 
