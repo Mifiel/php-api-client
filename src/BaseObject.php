@@ -61,10 +61,6 @@ abstract class BaseObject {
     );
   }
 
-  public function values() {
-    return $this->values;
-  }
-
   public function __get($property) {
     if (isset($this->values->$property)) {
       return $this->values->$property;

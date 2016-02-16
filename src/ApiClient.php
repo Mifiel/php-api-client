@@ -75,8 +75,6 @@ class ApiClient {
         $value = $value === true ? '1' : '0';
       } elseif (is_array($value) || is_object($value)) {
         $value = json_encode($value);
-      } elseif (is_numeric($value)) {
-        $value = "'$value'";
       }
 
       return [
@@ -107,10 +105,6 @@ class ApiClient {
       return;
     }
     return self::$appSecret;
-  }
-
-  public static function context(){
-    return self::$client;
   }
 
   private static function setClient() {
