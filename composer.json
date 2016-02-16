@@ -1,6 +1,6 @@
 {
   "name": "mifiel/api-client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Mifiel API Client for PHP",
   "keywords": [
     "Firma electrónica",
