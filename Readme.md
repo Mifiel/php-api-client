@@ -1,6 +1,7 @@
 # Mifiel PHP API Client
 
 [![Build Status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 
 ## Installation
 
@@ -49,10 +50,15 @@ Document methods:
 
 - Create:
 
+> Use only **original_hash** if you dont want us to have the file.<br>
+> Only **file** or **original_hash** must be provided.
+
   ```php
     use Mifiel\Document;
     $document = new Document([
       'file' => 'path/to/my-file.pdf',
+      // OR
+      'original_hash' => hash('sha256', 'some-file-contents'),
       'signatories' => [
         { 
           'name' => 'Signer 1', 
@@ -66,6 +72,7 @@ Document methods:
          }
       ]
     ])
+    $document->save();
   ```
 
 - Delete
@@ -107,6 +114,7 @@ Certificate methods:
     $certificate = new Certificate([
       'file' => 'path/to/my-certificate.cer'
     ])
+    $certificate->save();
   ```
 
 - Delete
@@ -125,3 +133,5 @@ Certificate methods:
 
 [travis-image]: https://travis-ci.org/Mifiel/php-api-client.svg?branch=master
 [travis-url]: https://travis-ci.org/Mifiel/php-api-client
+[coveralls-image]: https://coveralls.io/repos/github/Mifiel/php-api-client/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/Mifiel/php-api-client?branch=master
