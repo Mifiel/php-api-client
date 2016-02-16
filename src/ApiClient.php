@@ -92,7 +92,7 @@ class ApiClient {
   public static function appId($appId=null) {
     if ($appId) {
       self::$appId = $appId;
-      setClient();
+      self::setClient();
       return;
     }
     return self::$appId;
@@ -101,7 +101,7 @@ class ApiClient {
   public static function appSecret($appSecret=null) {
     if ($appSecret) {
       self::$appSecret = $appSecret;
-      setClient();
+      self::setClient();
       return;
     }
     return self::$appSecret;
@@ -121,7 +121,7 @@ class ApiClient {
     $stack->push($middleware);
 
     self::$client = new Client([
-      'base_uri' => self::$url,
+      'base_uri' => self::url(),
       'handler' => $stack,
     ]);
   }
