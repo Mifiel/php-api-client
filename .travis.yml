@@ -12,7 +12,7 @@ install:
 
 script:
   - mkdir -p build/logs
-  - php vendor/bin/phpunit -c phpunit.xml.dist --exclude-group internet
+  - php vendor/bin/phpunit --exclude-group internet
 
 after_success:
   - travis_retry php vendor/bin/coveralls
