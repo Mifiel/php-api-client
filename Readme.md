@@ -29,6 +29,8 @@ Then you can configure the library with:
 ```php
   use Mifiel\ApiClient as Mifiel;
   Mifiel::setTokens('APP_ID', 'APP_SECRET');
+  // if you want to use our sandbox environment use:
+  Mifiel::url('https://sandbox.mifiel.com/api/v1/');
 ```
 
 Document methods:
