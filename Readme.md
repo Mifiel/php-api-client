@@ -3,6 +3,9 @@
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 
+PHP SDK for [Mifiel](https://www.mifiel.com) API.
+Please read our [documentation](http://docs.mifiel.com/) for instructions on how to start using the API.
+
 ## Installation
 
 Just run `composer require mifiel/api-client` in the root your project or add `mifiel/api-client` to your [composer.json](https://getcomposer.org/).
@@ -26,6 +29,8 @@ Then you can configure the library with:
 ```php
   use Mifiel\ApiClient as Mifiel;
   Mifiel::setTokens('APP_ID', 'APP_SECRET');
+  // if you want to use our sandbox environment use:
+  Mifiel::url('https://sandbox.mifiel.com/api/v1/');
 ```
 
 Document methods:
