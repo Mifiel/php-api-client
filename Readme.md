@@ -61,22 +61,28 @@ Document methods:
   ```php
     use Mifiel\Document;
     $document = new Document([
-      'file' => 'path/to/my-file.pdf',
-      // OR
-      'original_hash' => hash('sha256', file_get_contents('path/to/my-file.pdf')),
+      'file_path' => 'path/to/my-file.pdf',
       'signatories' => [
-        { 
+        [ 
           'name' => 'Signer 1', 
           'email' => 'signer1@email.com', 
           'tax_id' =>  'AAA010101AAA' 
-        },
-        { 
+        ],
+        [ 
           'name' => 'Signer 2', 
           'email' => 'signer2@email.com', 
           'tax_id' =>  'AAA010102AAA'
-         }
+        ]
       ]
-    ])
+    ]);
+    // if you dont want us to have the PDF, you can just send us 
+    // the original_hash and the name of the document. Both are required
+    $document = new Document([
+      'original_hash' => hash('sha256', file_get_contents('path/to/my-file.pdf')),
+      'name' => 'my-file.pdf',
+      'signatories' => ...
+    ]);
+
     $document->save();
   ```
 
