@@ -25,6 +25,11 @@ class DocumentCRUDTest extends MifielTests {
     $this->setTokens();
     $document = new Document([
       'original_hash' => self::ORIGINAL_HASH,
+      'name' => 'some.pdf',
+      'signatories' => [
+        [ 'email' => 'paco@mifiel.com' ],
+        [ 'email' => 'pedro@mifiel.com' ]
+      ]
     ]);
     $document->save();
     self::$id = $document->id;
