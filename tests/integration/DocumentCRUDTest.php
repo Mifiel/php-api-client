@@ -41,6 +41,39 @@ class DocumentCRUDTest extends MifielTests {
   /**
    * @group internet
    */
+  public function testSaveFile() {
+    $this->setTokens();
+    $document = $this->getDocument();
+    $path = 'tmp/the-file.pdf';
+    $document->saveFile($path);
+    $this->assertTrue(file_exists($path));
+  }
+
+  /**
+   * @group internet
+   */
+  public function testSaveFileSigned() {
+    $this->setTokens();
+    $document = $this->getDocument();
+    $path = 'tmp/the-file-signed.pdf';
+    $document->saveFileSigned($path);
+    $this->assertTrue(file_exists($path));
+  }
+
+  /**
+   * @group internet
+   */
+  public function testSaveXml() {
+    $this->setTokens();
+    $document = $this->getDocument();
+    $path = 'tmp/the-file.xml';
+    $document->saveXml($path);
+    $this->assertTrue(file_exists($path));
+  }
+
+  /**
+   * @group internet
+   */
   public function testSaveDocCreate() {
     $this->setTokens();
     $document = new Document([
@@ -108,5 +141,4 @@ class DocumentCRUDTest extends MifielTests {
     $documents = Document::all();
     $this->assertEmpty($documents);
   }
-
 }

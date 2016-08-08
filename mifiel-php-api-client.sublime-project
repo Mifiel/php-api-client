@@ -14,7 +14,9 @@
       [
         "coverage",
         "node_modules",
-        "vendor"
+        "vendor",
+        "build",
+        "tmp"
       ],
       "follow_symlinks": true,
       "path": ".",

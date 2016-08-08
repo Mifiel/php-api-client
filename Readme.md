@@ -86,6 +86,20 @@ Document methods:
     $document->save();
   ```
 
+- Save Document related files
+
+```php
+  use Mifiel\Document;
+  $document = Document::find('id');
+
+  # save the original file
+  $document->saveFile('path/to/save/file.pdf');
+  # save the signed file (original file + signatures page)
+  $document->saveFileSigned('path/to/save/file-signed.pdf');
+  # save the signed xml file
+  $document->saveXML('path/to/save/xml.xml');
+```
+
 - Delete
 
   ```php
@@ -135,6 +149,10 @@ Certificate methods:
     use Mifiel\Certificate;
     Certificate::delete('id');
   ```
+
+## Development
+
+Install [grunt](http://gruntjs.com/) and run `grunt` in the terminal. This will run all tests whenever a change is detected to any file in the project.
 
 ## Contributing
 
