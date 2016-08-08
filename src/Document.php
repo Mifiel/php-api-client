@@ -16,4 +16,25 @@ class Document extends BaseObject {
     }
     parent::save();
   }
+
+  public function saveFile($path) {
+    $response = ApiClient::get(
+      static::$resourceName . '/' . $this->id . '/file'
+    );
+    file_put_contents($path, $response->getBody());
+  }
+
+  public function saveFileSigned($path) {
+    $response = ApiClient::get(
+      static::$resourceName . '/' . $this->id . '/file_signed'
+    );
+    file_put_contents($path, $response->getBody());
+  }
+
+  public function saveXML($path) {
+    $response = ApiClient::get(
+      static::$resourceName . '/' . $this->id . '/xml'
+    );
+    file_put_contents($path, $response->getBody());
+  }
 }

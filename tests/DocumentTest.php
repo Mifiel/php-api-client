@@ -34,6 +34,40 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     $document->save();
   }
 
+  public function testSaveFile() {
+    $document = new Document(['id' => 'some-id']);
+    $path = 'tmp/the-file.pdf';
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('get')
+      ->with('documents/some-id/file')
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+
+    $document->saveFile($path);
+  }
+
+  public function testSaveFileSigned() {
+    $document = new Document(['id' => 'some-id']);
+    $path = 'tmp/the-file-signed.pdf';
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('get')
+      ->with('documents/some-id/file_signed')
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+    $document->saveFileSigned($path);
+  }
+
+  public function testSaveXml() {
+    $document = new Document(['id' => 'some-id']);
+    $path = 'tmp/the-file.xml';
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('get')
+      ->with('documents/some-id/xml')
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+    $document->saveXML($path);
+  }
+
   public function testUpdate() {
     $document = new Document();
     $document->id = 'some-id';
