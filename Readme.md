@@ -150,6 +150,10 @@ Certificate methods:
     Certificate::delete('id');
   ```
 
+## Development
+
+Install [grunt](http://gruntjs.com/) and run `grunt` in the terminal. This will run all tests whenever a change is detected to any file in the project.
+
 ## Contributing
 
 1. Fork it ( https://github.com/Mifiel/php-api-client/fork )
