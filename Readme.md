@@ -1,5 +1,6 @@
 # Mifiel PHP API Client
 
+[![Latest Stable Version][packagist-image]][packagist-url]
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 
@@ -166,3 +167,6 @@ Install [grunt](http://gruntjs.com/) and run `grunt` in the terminal. This will 
 [travis-url]: https://travis-ci.org/Mifiel/php-api-client
 [coveralls-image]: https://coveralls.io/repos/github/Mifiel/php-api-client/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/Mifiel/php-api-client?branch=master
+
+[packagist-image]: https://img.shields.io/packagist/v/mifiel/api-client.svg
+[packagist-url]: https://packagist.org/packages/mifiel/api-client
