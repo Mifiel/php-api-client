@@ -153,6 +153,96 @@ Certificate methods:
     Certificate::delete('id');
   ```
 
+Template methods:
+
+- Find:
+
+  ```php
+    use Mifiel\Template;
+    $template = Template::find('id');
+    $template->name;
+    $template->header;
+    $template->content;
+    # ...
+  ```
+
+- Find all:
+
+  ```php
+    use Mifiel\Template;
+    $templates = Template::all();
+  ```
+
+- Create:
+
+  ```php
+    use Mifiel\Template;
+    $template = new Template([
+      'name' => 'My template name',
+      'header' => 'Some header text',
+      'content' => '<div>The signer <field name="signer">SIGNER</field></div>',
+      'footer' => 'Some footer text'
+    ]);
+    
+    $template->save();
+    $template->id;
+  ```
+
+- Delete
+
+  ```php
+    use Mifiel\Template;
+    Template::delete('id');
+  ```
+
+- Generate a document from a template
+
+```php
+use Mifiel\Document;
+
+$document = Document::createFromTemplate([
+  'template_id' => 'some-id',
+  'name' => 'Some-name.pdf',
+  'fields' => [
+    'name' => 'Signer 1',
+    'type' => 'Lawyer'
+  ],
+  'signatories' => [[
+    'email' => 'some@email.com'
+  ]],
+  'external_id' => 'some-external-id'
+]);
+```
+
+- Generate several documents from a template
+
+```php
+$document = Document::createManyFromTemplate([
+  'template_id' => 'some-id',
+  'identifier' => 'name',
+  'callback_url' => 'https://some-url.com',
+  'documents' => [[
+    'fields' => [
+      'name' => 'Signer 1',
+      'type' => 'Lawyer 1'
+    ],
+    'signatories' => [[
+      'email' => 'some1@email.com'
+    ]],
+    'external_id' => 'some-external-id'
+  ], [
+    'fields' => [
+      'name' => 'Signer 2',
+      'type' => 'Lawyer 2'
+    ],
+    'signatories' => [[
+      'email' => 'some2@email.com'
+    ]],
+    'external_id' => 'some-other-external-id'
+  ]]
+]);
+```
+
 ## Development
 
 Install [grunt](http://gruntjs.com/) and run `grunt` in the terminal. This will run all tests whenever a change is detected to any file in the project.
