@@ -41,6 +41,21 @@ class DocumentCRUDTest extends MifielTests {
   /**
    * @group internet
    */
+  public function testSaveDocCreate() {
+    $this->setTokens();
+    $document = new Document([
+      'file_path' => './tests/fixtures/example.pdf',
+    ]);
+    $document->save();
+    self::$id = $document->id;
+    // Fetch document again
+    $document = $this->getDocument();
+    $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
+  }
+
+  /**
+   * @group internet
+   */
   public function testSaveFile() {
     $this->setTokens();
     $document = $this->getDocument();
@@ -74,25 +89,10 @@ class DocumentCRUDTest extends MifielTests {
   /**
    * @group internet
    */
-  public function testSaveDocCreate() {
-    $this->setTokens();
-    $document = new Document([
-      'file_path' => './tests/fixtures/example.pdf',
-    ]);
-    $document->save();
-    self::$id = $document->id;
-    // Fetch document again
-    $document = $this->getDocument();
-    $this->assertEquals(self::ORIGINAL_HASH, $document->original_hash);
-  }
-
-  /**
-   * @group internet
-   */
   public function testSaveUpdate() {
     $document = $this->getDocument();
     $this->assertEquals('', $document->callback_url);
-    $callback_url = 'blah';
+    $callback_url = 'http://blah.com';
     $document->callback_url = $callback_url;
     $document->save();
     // Fetch document again

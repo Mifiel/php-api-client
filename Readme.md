@@ -1,5 +1,6 @@
 # Mifiel PHP API Client
 
+[![Latest Stable Version][packagist-image]][packagist-url]
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 
@@ -20,9 +21,11 @@ And then execute `composer install`.
 
 ## Usage
 
-To start using the API you will need an `APP_ID` and a `APP_SECRET` which will be provided upon request (contact us at hola@mifiel.com).
+For your convenience Mifiel offers a Sandbox environment where you can confidently test your code.
 
-You will first need to create an account in mifiel.com since the `APP_ID` and `APP_SECRET` will be linked to your account.
+To start using the API in the Sandbox environment you need to first create an account at [sandbox.mifiel.com](https://sandbox.mifiel.com).
+
+Once you have an account you will need an APP_ID and an APP_SECRET which you can generate in [sandbox.mifiel.com/access_tokens](https://sandbox.mifiel.com/access_tokens).
 
 Then you can configure the library with:
 
@@ -166,3 +169,6 @@ Install [grunt](http://gruntjs.com/) and run `grunt` in the terminal. This will 
 [travis-url]: https://travis-ci.org/Mifiel/php-api-client
 [coveralls-image]: https://coveralls.io/repos/github/Mifiel/php-api-client/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/Mifiel/php-api-client?branch=master
+
+[packagist-image]: https://img.shields.io/packagist/v/mifiel/api-client.svg
+[packagist-url]: https://packagist.org/packages/mifiel/api-client
