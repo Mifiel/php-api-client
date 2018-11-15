@@ -5,30 +5,36 @@ class PBE {
   private $numIterations = 1000;
   private $digestAlgorithm = 'sha256';
 
-  function __construct($params = array()) {
+  function __construct($params = null) {
     if (is_array($params)) {
-      foreach ($params as $property => $value) {
-        if (property_exists($this, $property)) {
-          $this->$property = $value;
-        }
+      if (array_key_exists('iterations', $params)) {
+        $this->numIterations = $params['iterations'];
       }
+      if (array_key_exists('digestAlgorithm', $params)) {
+        $this->digestAlgorithm = $params['digestAlgorithm'];
+      }
+    } else if ($params !== null) {
+      throw new \InvalidArgumentException('PBE construct expects an (object)[] of params');
     }
   }
 
-  public function __get($property) {
-    if (property_exists($this, $property)) {
-      return $this->$property;
-    }
+  public function setIterations($num) {
+    $this->numIterations = $num;
   }
 
-  public function __set($property, $value) {
-    if (property_exists($this, $property)) {
-      $this->$property = $value;
-    }
-    return $this;
+  public function getIterations() {
+    return $this->numIterations;
   }
 
-  public function randomPassword($length = 32) {
+  public function setDigestAlgorithm($alg) {
+    $this->digestAlgorithm = $alg;
+  }
+
+  public function getDigestAlgorithm() {
+    return $this->digestAlgorithm;
+  }
+
+  public static function randomPassword($length = 32) {
     $password = '';
     while (strlen($password) < $length) {
       $randomBytes = openssl_random_pseudo_bytes(100, $safe);
@@ -37,7 +43,7 @@ class PBE {
     return substr($password, 0, $length);
   }
 
-  public function randomSalt($size = 16) {
+  public static function randomSalt($size = 16) {
     return openssl_random_pseudo_bytes($size, $safe);
   }
 
