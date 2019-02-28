@@ -34,6 +34,60 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     $document->save();
   }
 
+  public function testcreateFromTemplate() {
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('post')
+      ->with('templates/some-id/generate_document', m::type('Array'), false)
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+
+    $document = Document::createFromTemplate([
+      'template_id' => 'some-id',
+      'name' => 'Some-name.pdf',
+      'fields' => [
+        'name' => 'Signer 1',
+        'type' => 'Lawyer'
+      ],
+      'signatories' => [[
+        'email' => 'some@email.com'
+      ]],
+      'external_id' => 'some-external-id'
+    ]);
+  }
+
+  public function testCreateManyFromTemplate() {
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('post')
+      ->with('templates/some-id/generate_documents', m::type('Array'), false)
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+
+    $document = Document::createManyFromTemplate([
+      'template_id' => 'some-id',
+      'identifier' => 'name',
+      'callback_url' => 'https://some-url.com',
+      'documents' => [[
+        'fields' => [
+          'name' => 'Signer 1',
+          'type' => 'Lawyer 1'
+        ],
+        'signatories' => [[
+          'email' => 'some1@email.com'
+        ]],
+        'external_id' => 'some-external-id'
+      ], [
+        'fields' => [
+          'name' => 'Signer 2',
+          'type' => 'Lawyer 2'
+        ],
+        'signatories' => [[
+          'email' => 'some2@email.com'
+        ]],
+        'external_id' => 'some-other-external-id'
+      ]]
+    ]);
+  }
+
   public function testSaveFile() {
     $document = new Document(['id' => 'some-id']);
     $path = 'tmp/the-file.pdf';
@@ -130,5 +184,4 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
 
     Document::delete('some-id');
   }
-
 }
