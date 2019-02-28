@@ -141,7 +141,7 @@ Certificate methods:
   ```php
     use Mifiel\Certificate;
     $certificate = new Certificate([
-      'file' => 'path/to/my-certificate.cer'
+      'file_path' => 'path/to/my-certificate.cer'
     ])
     $certificate->save();
   ```
