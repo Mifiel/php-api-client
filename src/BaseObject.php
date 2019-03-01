@@ -23,29 +23,77 @@ abstract class BaseObject {
     return $return;
   }
 
-  public static function checkRequiredArgs(array $required, $args) {
-    $e_required = [];
-    $e_type = [];
-    foreach ($required as $key => $type) {
+  public static function checkRequiredArgs(array $types, $args, $throw = true) {
+    $errors = [];
+    foreach ($types as $key => $type) {
+      $arg = $args[$key];
+      if (is_array($type)) {
+        if (is_array($arg)) {
+          $validation = self::checkRequiredArgs($type, $arg, false);
+          if (!$validation['valid']) {
+            $errors = array_merge($errors, $validation['errors']);
+          }
+        } else {
+          $keys = join(', ', array_keys($type));
+          array_push($errors, "Param '{$key}' must be a array with ($keys)");
+        }
+        continue;
+      }
       if (array_key_exists($key, $args)) {
-        if (gettype($args[$key]) != $type) {
-          array_push($e_type, "Param '{$key}' must be '$type'");
+        $validation = self::validType($type, $arg);
+        if (!$validation['valid']) {
+          $error = "Param '{$key}' must be a {$validation['types']}";
+          array_push($errors, $error);
         }
       } else {
-        array_push($e_required, $key);
+        array_push($errors, "Param '{$key}' is required");
       }
     }
-    if (!empty($e_required) || !empty($e_type)) {
-      $errors = [];
-      if (!empty($e_required)) {
-        $e_required = join(', ', $e_required);
-        array_push($errors, "Params '{$e_required}' are required");
-      }
-      $errors = $errors + $e_type;
-
+    if (!empty($errors)) {
+      if (!$throw) return ['valid' => false, 'errors' => $errors];
       throw new ArgumentError(join(', ', $errors), 1);
     }
-    return true;
+    return ['valid' => true];
+  }
+
+  public static function checkTypes(array $types, $args, $throw = true) {
+    $errors = [];
+    foreach ($types as $key => $type) {
+      $arg = $args[$key];
+      if (is_array($type)) {
+        if (is_array($arg)) {
+          $validation = self::checkTypes($type, $arg, false);
+          if (!$validation['valid']) {
+            $errors = array_merge($errors, $validation['errors']);
+          }
+        } else {
+          $keys = join(', ', array_keys($type));
+          array_push($errors, "Param '{$key}' must be a array with ($keys)");
+        }
+        continue;
+      }
+      if (array_key_exists($key, $args)) {
+        $validation = self::validType($type, $arg);
+        if (!$validation['valid']) {
+          $error = "Param '{$key}' must be a {$validation['types']}";
+          array_push($errors, $error);
+        }
+      }
+    }
+    if (!empty($errors)) {
+      if (!$throw) return ['valid' => false, 'errors' => $errors];
+      throw new ArgumentError(join(', ', $errors), 1);
+    }
+    return ['valid' => true];
+  }
+
+  private static function validType(string $type, $value) {
+    $or_types = explode('|', $type);
+    if (!in_array(gettype($value), $or_types)) {
+      $msg = implode(' or a ', $or_types);
+      return ['valid' => false, 'types' => $msg];
+    }
+    return ['valid' => true];
   }
 
   public static function find($id) {
