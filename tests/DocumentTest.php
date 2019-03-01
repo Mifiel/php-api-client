@@ -34,6 +34,20 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     $document->save();
   }
 
+  public function testTransfer() {
+    $document = new Document(['id' => 'some-id']);
+    m::mock('alias:Mifiel\ApiClient')
+      ->shouldReceive('post')
+      ->with('documents/some-id/transfer', m::type('Array'), true)
+      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->once();
+
+    $document->transfer([
+      'file_path' => './tests/fixtures/example.pdf',
+      'to' => 'RFC230889IJU'
+    ]);
+  }
+
   public function testcreateFromTemplate() {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')

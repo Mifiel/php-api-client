@@ -17,6 +17,36 @@ class Document extends BaseObject {
     parent::save();
   }
 
+  public function transfer($args) {
+    $optionalKeys = [
+      'template_id' => 'string',
+      'fields' => 'string',
+      'callback_url' => 'string',
+      'receiver' => 'array|string',
+      'signatories' => 'array',
+      'from' => 'string', # RFC of the issuer
+      'to' => 'string', # RFC of the receiver
+      'external_id' => 'string',
+      'file_path' => 'string',
+    ];
+    self::checkTypes($optionalKeys, $args);
+    $multipart = false;
+    if ($args['file_path']) {
+      $args['file'] = [
+        'filename' => basename($args['file_path']),
+        'contents' => fopen($args['file_path'], 'r')
+      ];
+      $multipart = true;
+      unset($args['file_path']);
+    }
+    $response = ApiClient::post(
+      static::$resourceName . '/' . $this->id . '/transfer',
+      $args,
+      $multipart
+    );
+    return json_decode($response->getBody());
+  }
+
   public function saveFile($path) {
     $response = ApiClient::get(
       static::$resourceName . '/' . $this->id . '/file'
