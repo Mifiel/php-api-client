@@ -1,6 +1,11 @@
 <?php
 namespace Mifiel\Tests;
 
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Middleware;
+
 use Mifiel\ApiClient,
     Mifiel\Document,
     Mockery as m;
@@ -22,7 +27,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
 
   public function testCreate() {
     $document = new Document([
-      'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
+      'file_path' => './tests/fixtures/example.pdf'
     ]);
 
     m::mock('alias:Mifiel\ApiClient')
@@ -46,6 +51,39 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
       'file_path' => './tests/fixtures/example.pdf',
       'to' => 'RFC230889IJU'
     ]);
+  }
+
+  public function testTransferRequest() {
+    $mock = new MockHandler([
+      new Response(200, ['X-Foo' => 'Bar']),
+    ]);
+    $container = [];
+    $history = Middleware::history($container);
+    $handler = HandlerStack::create($mock);
+    $handler->push($history);
+    ApiClient::setTokens('app_id', 'app_secret', $handler);
+
+    $document = new Document(['id' => 'some-id']);
+    $client = ApiClient::getClient();
+
+    $document->transfer([
+      'file_path' => './tests/fixtures/example.pdf',
+      'to' => 'RFC230889IJU'
+    ]);
+
+    $transaction = $container[0];
+    $request = $transaction['request'];
+    // print_r(get_class_methods($request));
+    $this->assertEquals(count($container), 1);
+    $content_type = $request->getHeader('Content-Type');
+    $to = $request->getBody()->stream->read(111);
+    $file_head = $request->getBody()->stream->read(130);
+    // print_r($file_head);
+    $this->assertContains('Content-Disposition: form-data; name="to"', $to);
+    $this->assertContains('Content-Disposition: form-data; name="file"; filename="example.pdf"', $file_head);
+    $this->assertContains('Content-Length: 8200', $file_head);
+    $this->assertContains('Content-Type: application/pdf', $file_head);
+    $this->assertContains('multipart/form-data; boundary', $content_type[0]);
   }
 
   public function testcreateFromTemplate() {
