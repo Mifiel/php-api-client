@@ -47,11 +47,13 @@ class Document extends BaseObject {
       'external_id' => 'string'
     ];
     self::checkRequiredArgs($requiredKeys, $args);
-    ApiClient::post(
+    $response = ApiClient::post(
       Template::resourceName() . '/' . $args['template_id'] . '/generate_document',
       $args,
       false
     );
+    $response_body = json_decode($response->getBody());
+    return new static($response_body);
   }
 
   public static function createManyFromTemplate($args) {
@@ -62,10 +64,11 @@ class Document extends BaseObject {
       'documents' => 'array'
     ];
     self::checkRequiredArgs($requiredKeys, $args);
-    ApiClient::post(
+    $response = ApiClient::post(
       Template::resourceName() . '/' . $args['template_id'] . '/generate_documents',
       $args,
       false
     );
+    return json_decode($response->getBody());
   }
 }
