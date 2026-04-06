@@ -17,8 +17,16 @@ class UserTest extends TestCase
    */
   public function allowMockeryAssertions(): void
   {
+    $assertionCount = 0;
     if ($container = m::getContainer()) {
-      $this->addToAssertionCount($container->mockery_getExpectationCount());
+      $assertionCount = $container->mockery_getExpectationCount();
+    }
+
+    // Ensures unmet Mockery expectations fail the test.
+    m::close();
+
+    if ($assertionCount > 0) {
+      $this->addToAssertionCount($assertionCount);
     }
   }
 
