@@ -245,7 +245,7 @@ $document = Document::createManyFromTemplate([
 
 ## Development & Tests
 
-We have thow kind of tests, unit and e2e (internet). You can run them with
+We have two kinds of tests, unit and e2e (internet). You can run them with
 
 ```bash
 # Unit
