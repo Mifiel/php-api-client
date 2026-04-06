@@ -243,9 +243,16 @@ $document = Document::createManyFromTemplate([
 ]);
 ```
 
-## Development
+## Development & Tests
 
-Install [grunt](http://gruntjs.com/) and run `grunt` in the terminal. This will run all tests whenever a change is detected to any file in the project.
+We have thow kind of tests, unit and e2e (internet). You can run them with
+
+```bash
+# Unit
+php vendor/bin/phpunit --exclude-group internet 
+# e2e
+php vendor/bin/phpunit --group internet
+```
 
 ## Contributing
 
