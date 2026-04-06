@@ -12,6 +12,13 @@ use PHPUnit\Framework\TestCase;
  */
 class DocumentTest extends TestCase
 {
+  public static function setUpBeforeClass(): void
+  {
+    if (!is_dir('tmp')) {
+      mkdir('tmp', 0777, true);
+    }
+  }
+
   /**
    * @after
    */
