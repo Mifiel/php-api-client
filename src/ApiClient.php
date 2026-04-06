@@ -1,12 +1,9 @@
 <?php
 namespace Mifiel;
 
-use GuzzleHttp\Psr7\Request,
-    Acquia\Hmac\Guzzle\HmacAuthMiddleware,
-    Acquia\Hmac\RequestSigner,
-    GuzzleHttp\Client,
-    GuzzleHttp\HandlerStack,
-    Mifiel\Digest\ApiAuthGemDigest;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use Mifiel\Http\HmacAuthMiddleware;
 
 class ApiClient {
 
@@ -113,14 +110,7 @@ class ApiClient {
   }
 
   private static function setClient() {
-    $signer = new RequestSigner(new ApiAuthGemDigest());
-    $signer->setProvider('APIAuth');
-
-    $middleware = new HmacAuthMiddleware(
-      $signer,
-      self::$appId,
-      self::$appSecret
-    );
+    $middleware = new HmacAuthMiddleware(self::$appId, self::$appSecret);
 
     $stack = HandlerStack::create();
     $stack->push($middleware);
