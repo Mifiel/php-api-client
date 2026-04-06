@@ -1,26 +1,29 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient,
-    Mifiel\Template,
-    Mockery as m;
+use Mifiel\ApiClient;
+use Mifiel\Template;
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class TemplateTest extends \PHPUnit_Framework_TestCase {
-
+class TemplateTest extends TestCase
+{
   /**
    * @after
-   **/
-  public function allowMockeryAsertions() {
+   */
+  public function allowMockeryAssertions(): void
+  {
     if ($container = m::getContainer()) {
       $this->addToAssertionCount($container->mockery_getExpectationCount());
     }
   }
 
-  public function testCreate() {
+  public function testCreate(): void
+  {
     $template = new Template([
       'name' => 'some template name',
       'content' => '<field name="some">SOME</field>'
@@ -29,30 +32,32 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
       ->with('templates', m::type('Array'), false)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $template->save();
   }
 
-  public function testUpdate() {
+  public function testUpdate(): void
+  {
     $template = new Template();
     $template->id = 'some-id';
 
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('put')
       ->with('templates/some-id', array('id' => 'some-id'), false)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $template->save();
   }
 
-  public function testAll() {
-    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+  public function testAll(): void
+  {
+    $mockResponse = m::mock(\GuzzleHttp\Psr7\Response::class);
     $mockResponse->shouldReceive('getBody')
                  ->once()
-                 ->andReturn('[{"id": "some-id"}]');
+                 ->andReturn(\GuzzleHttp\Psr7\Utils::streamFor('[{"id": "some-id"}]'));
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('templates')
@@ -62,11 +67,12 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
     $templates = Template::all();
   }
 
-  public function testFind() {
-    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+  public function testFind(): void
+  {
+    $mockResponse = m::mock(\GuzzleHttp\Psr7\Response::class);
     $mockResponse->shouldReceive('getBody')
                  ->once()
-                 ->andReturn('{"id": "some-id"}');
+                 ->andReturn(\GuzzleHttp\Psr7\Utils::streamFor('{"id": "some-id"}'));
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('templates/some-id')
@@ -76,7 +82,8 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
     Template::find('some-id');
   }
 
-  public function testSetGetProperties() {
+  public function testSetGetProperties(): void
+  {
     $original_hash = hash('sha256', 'some-template-contents');
     $template = new Template([
       'original_hash' => $original_hash
@@ -88,11 +95,12 @@ class TemplateTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($new_original_hash, $template->original_hash);
   }
 
-  public function testDelete() {
+  public function testDelete(): void
+  {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('delete')
       ->with('templates/some-id')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     Template::delete('some-id');

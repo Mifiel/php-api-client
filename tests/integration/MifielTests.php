@@ -4,13 +4,15 @@
 namespace Mifiel\Tests\Integration;
 
 use Mifiel\ApiClient as Mifiel;
+use PHPUnit\Framework\TestCase;
 
-class MifielTests extends \PHPUnit_Framework_TestCase {
-
-  public function setTokens() {
+class MifielTests extends TestCase
+{
+  public function setTokens(): void
+  {
     Mifiel::setTokens(
-      '44c783d37ef12d3912f911c7b3ac44d657d83b17',
-      'm7MvN0kvmF4/TbYGb7ImlWtUbfQ2XSj+STzvmLBCzOI2L+Kgr2ajaOkftQevv8/KJILevxlpvFWpVbj7hczQQg=='
+      'b041efb8db49308e496b70e3bdf51d0005c184d3',
+      'M5DHRLCdYCqOs2PELvizW6qr/yXIBj0CAAk9/OR8UbwadFjBeeKn774sf3IVO7G8H2wUJsLsn3uL3H8SJCdd4w==',
     );
     Mifiel::url('http://localhost:3000/api/v1/');
   }

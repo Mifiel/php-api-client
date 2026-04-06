@@ -4,3 +4,4 @@ coverage
 clover.xml
 *.sublime-workspace
 tmp
+.phpunit.cache/

@@ -1,57 +1,62 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient,
-    Mifiel\Certificate,
-    Mockery as m;
+use Mifiel\ApiClient;
+use Mifiel\Certificate;
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class CertificateTest extends \PHPUnit_Framework_TestCase {
-
+class CertificateTest extends TestCase
+{
   /**
    * @after
-   **/
-  public function allowMockeryAsertions() {
+   */
+  public function allowMockeryAssertions(): void
+  {
     if ($container = m::getContainer()) {
       $this->addToAssertionCount($container->mockery_getExpectationCount());
     }
   }
 
-  public function testCreate() {
+  public function testCreate(): void
+  {
     $certificate = new Certificate([
-      'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
+      'file_path' => './tests/fixtures/FIEL_CARF7606076K1.cer'
     ]);
 
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
       ->with('keys', m::type('Array'), true)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $certificate->save();
   }
 
-  public function testUpdate() {
+  public function testUpdate(): void
+  {
     $certificate = new Certificate();
     $certificate->id = 'some-id';
 
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('put')
       ->with('keys/some-id', array('id' => 'some-id'), true)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $certificate->save();
   }
 
-  public function testAll() {
-    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+  public function testAll(): void
+  {
+    $mockResponse = m::mock(\GuzzleHttp\Psr7\Response::class);
     $mockResponse->shouldReceive('getBody')
                  ->once()
-                 ->andReturn('[{"id": "some-id"}]');
+                 ->andReturn(\GuzzleHttp\Psr7\Utils::streamFor('[{"id": "some-id"}]'));
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('keys')
@@ -61,11 +66,12 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
     $certificates = Certificate::all();
   }
 
-  public function testFind() {
-    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+  public function testFind(): void
+  {
+    $mockResponse = m::mock(\GuzzleHttp\Psr7\Response::class);
     $mockResponse->shouldReceive('getBody')
                  ->once()
-                 ->andReturn('{"id": "some-id"}');
+                 ->andReturn(\GuzzleHttp\Psr7\Utils::streamFor('{"id": "some-id"}'));
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('keys/some-id')
@@ -75,32 +81,35 @@ class CertificateTest extends \PHPUnit_Framework_TestCase {
     Certificate::find('some-id');
   }
 
-  public function testSetGetProperties() {
+  public function testSetGetProperties(): void
+  {
     $certificate = new Certificate([
-      'certificate_number' => '20001000000200001410'
+      'certificate_number' => '1FB6'
     ]);
-    $this->assertEquals('20001000000200001410', $certificate->certificate_number);
+    $this->assertEquals('1FB6', $certificate->certificate_number);
 
     $certificate_number = 'blah';
     $certificate->certificate_number = $certificate_number;
     $this->assertEquals($certificate_number, $certificate->certificate_number);
   }
 
-  public function testDelete() {
+  public function testDelete(): void
+  {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('delete')
       ->with('keys/some-id')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     Certificate::delete('some-id');
   }
 
-  public function testSat() {
+  public function testSat(): void
+  {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('keys/sat')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     Certificate::sat();
