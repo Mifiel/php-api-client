@@ -1,44 +1,55 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient,
-    Mifiel\Document,
-    Mockery as m;
+use Mifiel\ApiClient;
+use Mifiel\Document;
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class DocumentTest extends \PHPUnit_Framework_TestCase {
+class DocumentTest extends TestCase
+{
+  public static function setUpBeforeClass(): void
+  {
+    if (!is_dir('tmp')) {
+      mkdir('tmp', 0777, true);
+    }
+  }
 
   /**
    * @after
-   **/
-  public function allowMockeryAsertions() {
+   */
+  public function allowMockeryAssertions(): void
+  {
     if ($container = m::getContainer()) {
       $this->addToAssertionCount($container->mockery_getExpectationCount());
     }
   }
 
-  public function testCreate() {
+  public function testCreate(): void
+  {
     $document = new Document([
-      'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
+      'file_path' => './tests/fixtures/FIEL_CARF7606076K1.cer'
     ]);
 
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
       ->with('documents', m::type('Array'), true)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $document->save();
   }
 
-  public function testcreateFromTemplate() {
+  public function testcreateFromTemplate(): void
+  {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
       ->with('templates/some-id/generate_document', m::type('Array'), false)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $document = Document::createFromTemplate([
@@ -55,11 +66,12 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     ]);
   }
 
-  public function testCreateManyFromTemplate() {
+  public function testCreateManyFromTemplate(): void
+  {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
       ->with('templates/some-id/generate_documents', m::type('Array'), false)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $document = Document::createManyFromTemplate([
@@ -88,58 +100,63 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     ]);
   }
 
-  public function testSaveFile() {
+  public function testSaveFile(): void
+  {
     $document = new Document(['id' => 'some-id']);
     $path = 'tmp/the-file.pdf';
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('documents/some-id/file')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $document->saveFile($path);
   }
 
-  public function testSaveFileSigned() {
+  public function testSaveFileSigned(): void
+  {
     $document = new Document(['id' => 'some-id']);
     $path = 'tmp/the-file-signed.pdf';
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('documents/some-id/file_signed')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
     $document->saveFileSigned($path);
   }
 
-  public function testSaveXml() {
+  public function testSaveXml(): void
+  {
     $document = new Document(['id' => 'some-id']);
     $path = 'tmp/the-file.xml';
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('documents/some-id/xml')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
     $document->saveXML($path);
   }
 
-  public function testUpdate() {
+  public function testUpdate(): void
+  {
     $document = new Document();
     $document->id = 'some-id';
 
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('put')
       ->with('documents/some-id', array('id' => 'some-id'), true)
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     $document->save();
   }
 
-  public function testAll() {
-    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+  public function testAll(): void
+  {
+    $mockResponse = m::mock(\GuzzleHttp\Psr7\Response::class);
     $mockResponse->shouldReceive('getBody')
                  ->once()
-                 ->andReturn('[{"id": "some-id"}]');
+                 ->andReturn(\GuzzleHttp\Psr7\Utils::streamFor('[{"id": "some-id"}]'));
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('documents')
@@ -149,11 +166,12 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     $documents = Document::all();
   }
 
-  public function testFind() {
-    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
+  public function testFind(): void
+  {
+    $mockResponse = m::mock(\GuzzleHttp\Psr7\Response::class);
     $mockResponse->shouldReceive('getBody')
                  ->once()
-                 ->andReturn('{"id": "some-id"}');
+                 ->andReturn(\GuzzleHttp\Psr7\Utils::streamFor('{"id": "some-id"}'));
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('get')
       ->with('documents/some-id')
@@ -163,7 +181,8 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     Document::find('some-id');
   }
 
-  public function testSetGetProperties() {
+  public function testSetGetProperties(): void
+  {
     $original_hash = hash('sha256', 'some-document-contents');
     $document = new Document([
       'original_hash' => $original_hash
@@ -175,11 +194,12 @@ class DocumentTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($new_original_hash, $document->original_hash);
   }
 
-  public function testDelete() {
+  public function testDelete(): void
+  {
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('delete')
       ->with('documents/some-id')
-      ->andReturn(new \GuzzleHttp\Psr7\Response)
+      ->andReturn(new \GuzzleHttp\Psr7\Response())
       ->once();
 
     Document::delete('some-id');

@@ -1,16 +1,19 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient,
-    Mifiel\BaseObject,
-    Mifiel\ArgumentError;
+use Mifiel\ApiClient;
+use Mifiel\ArgumentError;
+use Mifiel\BaseObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BaseObjectTest extends \PHPUnit_Framework_TestCase {
-  public function testCheckRequiredArgsOK() {
+class BaseObjectTest extends TestCase
+{
+  public function testCheckRequiredArgsOK(): void
+  {
     $required = [
       'some' => 'string',
       'other' => 'string',
@@ -22,10 +25,11 @@ class BaseObjectTest extends \PHPUnit_Framework_TestCase {
       'arg' => ['some' => 'arg']
     ];
     $resp = BaseObject::checkRequiredArgs($required, $args);
-    $this->assertEquals($resp, true);
+    $this->assertTrue($resp);
   }
 
-  public function testCheckRequiredArgsRequired() {
+  public function testCheckRequiredArgsRequired(): void
+  {
     $required = [
       'some' => 'string',
       'other' => 'string',
@@ -35,15 +39,12 @@ class BaseObjectTest extends \PHPUnit_Framework_TestCase {
       'some' => 'blah',
       'other' => 'blah1'
     ];
-    $this->setExpectedException('Mifiel\ArgumentError');
+    $this->expectException(ArgumentError::class);
     BaseObject::checkRequiredArgs($required, $args);
   }
 
-  /**
-   * @expectedException        Mifiel\ArgumentError
-   * @expectedExceptionMessage Param 'other' must be 'string'
-   */
-  public function testCheckRequiredArgsWrongType() {
+  public function testCheckRequiredArgsWrongType(): void
+  {
     $required = [
       'some' => 'string',
       'other' => 'string',
@@ -54,6 +55,8 @@ class BaseObjectTest extends \PHPUnit_Framework_TestCase {
       'other' => ['blah1'],
       'arg' => ['some']
     ];
+    $this->expectException(ArgumentError::class);
+    $this->expectExceptionMessage("Param 'other' must be 'string'");
     BaseObject::checkRequiredArgs($required, $args);
   }
 }

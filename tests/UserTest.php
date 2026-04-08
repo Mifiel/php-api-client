@@ -1,26 +1,37 @@
 <?php
 namespace Mifiel\Tests;
 
-use Mifiel\ApiClient,
-    Mifiel\User,
-    Mockery as m;
+use Mifiel\ApiClient;
+use Mifiel\User;
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class UserTest extends \PHPUnit_Framework_TestCase {
-
+class UserTest extends TestCase
+{
   /**
    * @after
-   **/
-  public function allowMockeryAsertions() {
+   */
+  public function allowMockeryAssertions(): void
+  {
+    $assertionCount = 0;
     if ($container = m::getContainer()) {
-      $this->addToAssertionCount($container->mockery_getExpectationCount());
+      $assertionCount = $container->mockery_getExpectationCount();
+    }
+
+    // Ensures unmet Mockery expectations fail the test.
+    m::close();
+
+    if ($assertionCount > 0) {
+      $this->addToAssertionCount($assertionCount);
     }
   }
 
-  public function testCreate() {
+  public function testCreate(): void
+  {
     $user = new User([
       'email' => 'some@email.com'
     ]);
@@ -34,19 +45,15 @@ class UserTest extends \PHPUnit_Framework_TestCase {
     $user->save();
   }
 
-  public function testFind() {
-    $mockResponse = m::mock('\GuzzleHttp\Psr7\Response');
-    $mockResponse->shouldReceive('getBody')
-                 ->once()
-                 ->andReturn('{"id": "some-id"}');
-
-    $this->setExpectedException('\Exception');
+  public function testFind(): void
+  {
+    $this->expectException(\Exception::class);
     User::find('some-id');
   }
 
-  public function testDelete() {
-    $this->setExpectedException('\Exception');
-
+  public function testDelete(): void
+  {
+    $this->expectException(\Exception::class);
     User::delete('some-id');
   }
 }
