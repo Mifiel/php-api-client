@@ -20,11 +20,11 @@ class CertificateCRUDTest extends MifielTests {
   public function testCreate() {
     $this->setTokens();
     $certificate = new Certificate([
-      'file_path' => './tests/fixtures/FIEL_AAA010101AAA.cer'
+      'file_path' => './tests/fixtures/FIEL_CARF7606076K1.cer'
     ]);
     $certificate->save();
     self::$id = $certificate->id;
-    // Fetch document again
+    // Fetch certs again
     $certificate = $this->getCertificate();
     $this->assertEquals(self::$id, $certificate->id);
   }
@@ -52,7 +52,7 @@ class CertificateCRUDTest extends MifielTests {
    */
   public function testSetProperties() {
     $certificate = $this->getCertificate();
-    $this->assertEquals('20001000000200001410', $certificate->certificate_number);
+    $this->assertEquals('1FB6', $certificate->certificate_number);
 
     $certificate_number = 'blah';
     $certificate->certificate_number = $certificate_number;

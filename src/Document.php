@@ -37,4 +37,35 @@ class Document extends BaseObject {
     );
     file_put_contents($path, $response->getBody());
   }
+
+  public static function createFromTemplate($args) {
+    $requiredKeys = [
+      'template_id' => 'string',
+      'name' => 'string',
+      'fields' => 'array',
+      'signatories' => 'array',
+      'external_id' => 'string'
+    ];
+    self::checkRequiredArgs($requiredKeys, $args);
+    ApiClient::post(
+      Template::resourceName() . '/' . $args['template_id'] . '/generate_document',
+      $args,
+      false
+    );
+  }
+
+  public static function createManyFromTemplate($args) {
+    $requiredKeys = [
+      'template_id' => 'string',
+      'identifier' => 'string',
+      'callback_url' => 'string',
+      'documents' => 'array'
+    ];
+    self::checkRequiredArgs($requiredKeys, $args);
+    ApiClient::post(
+      Template::resourceName() . '/' . $args['template_id'] . '/generate_documents',
+      $args,
+      false
+    );
+  }
 }
