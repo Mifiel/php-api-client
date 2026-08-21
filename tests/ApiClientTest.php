@@ -19,6 +19,18 @@ class ApiClientTest extends TestCase
     $this->assertEquals('https://app.mifiel.com/api/v1/', Mifiel::url());
   }
 
+  public function testUserAgent(): void
+  {
+    $ua = Mifiel::userAgent();
+    $parts = explode(' ', $ua);
+
+    $this->assertStringStartsWith('PHP/', $parts[0]);
+    $this->assertStringStartsWith('mifiel/api-client/', $parts[1]);
+    $this->assertStringStartsWith('guzzle/', $parts[2]);
+    $this->assertStringStartsWith('(', $parts[3]);
+    $this->assertStringEndsWith(')', $parts[3]);
+  }
+
   public function testSetters(): void
   {
     Mifiel::appId($this->appId);

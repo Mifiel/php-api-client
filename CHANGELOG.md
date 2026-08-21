@@ -7,6 +7,10 @@
 - Default API base URL after `setTokens()` changed from `https://www.mifiel.com/api/v1/` to `https://app.mifiel.com/api/v1/`.
 - Sandbox documentation and examples now use `https://app-sandbox.mifiel.com/api/v1/` instead of `https://sandbox.mifiel.com/api/v1/`.
 
+### Features
+
+- Send a standardized `User-Agent` on API requests, e.g. `PHP/8.3.0 mifiel/api-client/3.0.0 guzzle/7.9.2 (Linux/6.8.0)`.
+
 ### Migration
 
 ```php
