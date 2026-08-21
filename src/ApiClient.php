@@ -15,7 +15,7 @@ class ApiClient {
   public static function setTokens($appId, $appSecret) {
     self::$appId = $appId;
     self::$appSecret = $appSecret;
-    self::$url = 'https://www.mifiel.com/api/v1/';
+    self::$url = 'https://app.mifiel.com/api/v1/';
     self::setClient();
   }
 

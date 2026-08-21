@@ -16,6 +16,7 @@ class ApiClientTest extends TestCase
 
     $this->assertEquals($this->appId, Mifiel::appId());
     $this->assertEquals($this->appSecret, Mifiel::appSecret());
+    $this->assertEquals('https://app.mifiel.com/api/v1/', Mifiel::url());
   }
 
   public function testSetters(): void
