@@ -3,5 +3,5 @@ namespace Mifiel;
 
 final class Version
 {
-  public const STRING = '3.0.0';
+  public const STRING = '4.0.0';
 }

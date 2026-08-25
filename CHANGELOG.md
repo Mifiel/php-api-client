@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.0.0 - 2026-08-21
+## v4.0.0 - 2026-08-25
 
 ### Breaking changes
 
@@ -24,3 +24,9 @@ Mifiel::url('https://app-sandbox.mifiel.com/api/v1/');
 ```
 
 If you previously overrode the URL with a legacy host, update those overrides or remove them to pick up the new defaults.
+
+## v3.0.0 - 2026-04-17
+
+### Breaking changes
+
+- Drop support for PHP < 7
