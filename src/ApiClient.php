@@ -127,7 +127,7 @@ class ApiClient {
   }
 
   /**
-   * Example: PHP/8.3.0 mifiel/api-client/3.0.0 guzzle/7.9.2 (Linux/6.8.0)
+   * Example: PHP/8.3.0 mifiel/api-client/4.0.0 guzzle/7.9.2 (Linux/6.8.0)
    */
   public static function userAgent(): string
   {
