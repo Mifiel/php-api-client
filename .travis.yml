@@ -12,6 +12,3 @@ script:
   - mkdir -p build/logs
   - mkdir -p tmp
   - php vendor/bin/phpunit --exclude-group internet
-
-after_success:
-  - travis_retry php vendor/bin/coveralls

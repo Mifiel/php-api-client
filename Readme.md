@@ -2,7 +2,6 @@
 
 [![Latest Stable Version][packagist-image]][packagist-url]
 [![Build Status][travis-image]][travis-url]
-[![Coverage Status][coveralls-image]][coveralls-url]
 
 PHP SDK for [Mifiel](https://www.mifiel.com) API.
 Please read our [documentation](http://docs.mifiel.com/) for instructions on how to start using the API.
@@ -23,9 +22,9 @@ And then execute `composer install`.
 
 For your convenience Mifiel offers a Sandbox environment where you can confidently test your code.
 
-To start using the API in the Sandbox environment you need to first create an account at [sandbox.mifiel.com](https://sandbox.mifiel.com).
+To start using the API in the Sandbox environment you need to first create an account at [app-sandbox.mifiel.com](https://app-sandbox.mifiel.com).
 
-Once you have an account you will need an APP_ID and an APP_SECRET which you can generate in [sandbox.mifiel.com/access_tokens](https://sandbox.mifiel.com/access_tokens).
+Once you have an account you will need an APP_ID and an APP_SECRET which you can generate in [app-sandbox.mifiel.com/settings/access-tokens](https://app-sandbox.mifiel.com/settings/access-tokens).
 
 Then you can configure the library with:
 
@@ -33,8 +32,10 @@ Then you can configure the library with:
   use Mifiel\ApiClient as Mifiel;
   Mifiel::setTokens('APP_ID', 'APP_SECRET');
   // if you want to use our sandbox environment use:
-  Mifiel::url('https://sandbox.mifiel.com/api/v1/');
+  Mifiel::url('https://app-sandbox.mifiel.com/api/v1/');
 ```
+
+By default `setTokens` points at production (`https://app.mifiel.com/api/v1/`).
 
 Document methods:
 
@@ -229,7 +230,7 @@ $document = Document::createManyFromTemplate([
     'signatories' => [[
       'email' => 'some1@email.com'
     ]],
-    'external_id' => 'some-external-id'
+    'external_id' => 'some-other-external-id'
   ], [
     'fields' => [
       'name' => 'Signer 2',
@@ -264,8 +265,6 @@ php vendor/bin/phpunit --group internet
 
 [travis-image]: https://travis-ci.org/Mifiel/php-api-client.svg?branch=master
 [travis-url]: https://travis-ci.org/Mifiel/php-api-client
-[coveralls-image]: https://coveralls.io/repos/github/Mifiel/php-api-client/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/Mifiel/php-api-client?branch=master
 
 [packagist-image]: https://img.shields.io/packagist/v/mifiel/api-client.svg
 [packagist-url]: https://packagist.org/packages/mifiel/api-client

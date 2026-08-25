@@ -1,7 +1,9 @@
 <?php
 namespace Mifiel;
 
+use Composer\InstalledVersions;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\HandlerStack;
 use Mifiel\Http\HmacAuthMiddleware;
 
@@ -15,7 +17,7 @@ class ApiClient {
   public static function setTokens($appId, $appSecret) {
     self::$appId = $appId;
     self::$appSecret = $appSecret;
-    self::$url = 'https://www.mifiel.com/api/v1/';
+    self::$url = 'https://app.mifiel.com/api/v1/';
     self::setClient();
   }
 
@@ -118,7 +120,39 @@ class ApiClient {
     self::$client = new Client([
       'base_uri' => self::url(),
       'handler' => $stack,
+      'headers' => [
+        'User-Agent' => self::userAgent(),
+      ],
     ]);
+  }
+
+  /**
+   * Example: PHP/8.3.0 mifiel/api-client/4.0.0 guzzle/7.9.2 (Linux/6.8.0)
+   */
+  public static function userAgent(): string
+  {
+    $guzzleVersion = self::packageVersion('guzzlehttp/guzzle', (string) ClientInterface::MAJOR_VERSION);
+    $os = str_replace(' ', '_', php_uname('s'));
+    $osRelease = str_replace(' ', '_', php_uname('r'));
+
+    return implode(' ', [
+      'PHP/' . PHP_VERSION,
+      'mifiel/api-client/' . Version::STRING,
+      'guzzle/' . $guzzleVersion,
+      sprintf('(%s/%s)', $os, $osRelease),
+    ]);
+  }
+
+  private static function packageVersion(string $package, string $fallback): string
+  {
+    if (class_exists(InstalledVersions::class) && InstalledVersions::isInstalled($package)) {
+      $version = InstalledVersions::getPrettyVersion($package);
+      if (is_string($version) && $version !== '') {
+        return $version;
+      }
+    }
+
+    return $fallback;
   }
 
   public static function getClient() {
