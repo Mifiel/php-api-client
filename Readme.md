@@ -25,7 +25,7 @@ Or add it to your `composer.json`:
 ```json
 {
   "require": {
-    "mifiel/api-client": "^3.0"
+    "mifiel/api-client": "^4.0"
   }
 }
 ```
