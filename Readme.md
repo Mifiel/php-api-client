@@ -12,8 +12,7 @@ API reference, guides, and examples:
 - English: https://docs.mifiel.com/en/
 - Español: https://docs.mifiel.com/es/
 
-This README covers installation and client setup. See [PHP examples](examples/usage.md)
-for document state, stakeholders, ZIP downloads, advanced searches and webhooks.
+This README covers installation and client setup only.
 
 Requires PHP 8.3 or newer and Guzzle 7 or 8.
 

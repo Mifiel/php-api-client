@@ -8,7 +8,7 @@
 - Add `Document::addStakeholder()`, `updateStakeholder()` and `deleteStakeholder()`.
 - Add `Document::saveZIP()` for signed PDF/XML archives.
 - Add `Query::execute()` for advanced searches, preserving records and metadata.
-- Add PHP examples and a PHP 8.3/8.4/8.5 × Guzzle 7/8 unit-test workflow.
+- Add a PHP 8.3/8.4/8.5 × Guzzle 7/8 unit-test workflow.
 
 ### Fixes
 
