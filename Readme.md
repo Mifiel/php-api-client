@@ -1,7 +1,7 @@
 # Mifiel PHP API Client
 
 [![Latest Stable Version][packagist-image]][packagist-url]
-[![Build Status][travis-image]][travis-url]
+[![Build Status][tests-image]][tests-url]
 
 PHP SDK for the [Mifiel](https://www.mifiel.com) API.
 
@@ -13,6 +13,8 @@ API reference, guides, and examples:
 - Español: https://docs.mifiel.com/es/
 
 This README covers installation and client setup only.
+
+Requires PHP 8.3 or newer and Guzzle 7 or 8.
 
 ## Installation
 
@@ -62,7 +64,7 @@ php vendor/bin/phpunit --group internet
 4. Push to the branch (`git push origin feature/my-new-feature`)
 5. Create a new Pull Request
 
-[travis-image]: https://travis-ci.org/Mifiel/php-api-client.svg?branch=master
-[travis-url]: https://travis-ci.org/Mifiel/php-api-client
+[tests-image]: https://github.com/Mifiel/php-api-client/actions/workflows/tests.yml/badge.svg?branch=master
+[tests-url]: https://github.com/Mifiel/php-api-client/actions/workflows/tests.yml
 [packagist-image]: https://img.shields.io/packagist/v/mifiel/api-client.svg
 [packagist-url]: https://packagist.org/packages/mifiel/api-client
