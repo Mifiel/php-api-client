@@ -46,10 +46,11 @@ class DocumentTest extends TestCase
 
   public function testcreateFromTemplate(): void
   {
+    $response = new \GuzzleHttp\Psr7\Response(201, [], '{"id":"result-id"}');
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
       ->with('templates/some-id/generate_document', m::type('Array'), false)
-      ->andReturn(new \GuzzleHttp\Psr7\Response())
+      ->andReturn($response)
       ->once();
 
     $document = Document::createFromTemplate([
@@ -64,14 +65,16 @@ class DocumentTest extends TestCase
       ]],
       'external_id' => 'some-external-id'
     ]);
+    $this->assertSame($response, $document);
   }
 
   public function testCreateManyFromTemplate(): void
   {
+    $response = new \GuzzleHttp\Psr7\Response(201, [], '{"id":"result-id"}');
     m::mock('alias:Mifiel\ApiClient')
       ->shouldReceive('post')
       ->with('templates/some-id/generate_documents', m::type('Array'), false)
-      ->andReturn(new \GuzzleHttp\Psr7\Response())
+      ->andReturn($response)
       ->once();
 
     $document = Document::createManyFromTemplate([
@@ -98,6 +101,7 @@ class DocumentTest extends TestCase
         'external_id' => 'some-other-external-id'
       ]]
     ]);
+    $this->assertSame($response, $document);
   }
 
   public function testSaveFile(): void

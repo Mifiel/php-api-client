@@ -25,7 +25,8 @@ class ApiClientTest extends TestCase
     $parts = explode(' ', $ua);
 
     $this->assertStringStartsWith('PHP/', $parts[0]);
-    $this->assertStringStartsWith('mifiel/api-client/', $parts[1]);
+    $package = json_decode(file_get_contents(__DIR__ . '/../composer.json'), true);
+    $this->assertSame('mifiel/api-client/' . $package['version'], $parts[1]);
     $this->assertStringStartsWith('guzzle/', $parts[2]);
     $this->assertStringStartsWith('(', $parts[3]);
     $this->assertStringEndsWith(')', $parts[3]);
