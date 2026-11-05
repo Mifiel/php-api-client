@@ -8,7 +8,8 @@
 - Add `Document::addStakeholder()`, `updateStakeholder()` and `deleteStakeholder()`.
 - Add `Document::saveZIP()` for signed PDF/XML archives.
 - Add `Query::execute()` for advanced searches, preserving records and metadata.
-- Add a PHP 8.3/8.4/8.5 × Guzzle 7/8 unit-test workflow.
+- Replace Travis CI with a PHP 8.3/8.4/8.5 × Guzzle 7/8 unit-test workflow,
+  triggered only on push to avoid duplicate runs for pull requests.
 
 ### Fixes
 
