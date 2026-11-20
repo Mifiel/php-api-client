@@ -41,6 +41,8 @@ class ApiClient {
     $options = [];
     if ($multipart) {
       $options['multipart'] = self::build_multipart($params);
+    } elseif ($type === 'GET' && !empty($params)) {
+      $options['query'] = $params;
     } elseif(!empty($params)) {
       $options['json'] = $params;
     }
@@ -69,7 +71,7 @@ class ApiClient {
         'filename'  => $value['filename']
       ];
     }
-    if (!empty($value) && gettype($value) != 'NULL') {
+    if ($value !== null) {
       if (is_bool($value)){
         $value = $value === true ? '1' : '0';
       } elseif (is_array($value) || is_object($value)) {
